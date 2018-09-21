@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--引入公共内容-->
+    <span th:replace="/pages/common :: css('BOS管理系统 首页')"></span>
+    <span th:replace="/pages/common :: js"></span>
+
+    <script type="text/javascript">
+
+        $(function(){
+            $("#win").window({
+                "title": "我是标题",
+                "width" : 500 ,
+                "height" : 400 ,
+                "modal" : true,
+                "collapsible" : false,
+                "minimizable" : false,
+                "maximizable" : false,
+                "closable" : true,
+                "shadow" : true
+            });
+        });
+
+    </script>
+
+</head>
+<body >
+
+    <input id="bid" type="button" value="点击打开"  />
+
+
+    <div id="win"></div>
+
+</body>
+</html>

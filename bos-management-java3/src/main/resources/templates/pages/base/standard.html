@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!--引入公共内容-->
+	<span th:replace="/pages/common :: css('取派标准')"></span>
+	<span th:replace="/pages/common :: js"></span>
+
+		<script type="text/javascript">
+			$(function(){
+				// 先将body隐藏，再显示，不会出现页面刷新效果
+				$("body").css({visibility:"visible"});
+				
+
+				
+				//此处继续添加其他功能性代码
+				// 对收派标准 save按钮，添加click事件
+				$("#save").click(function(){
+				    //表单校验通过后，执行程序
+					if($("#standardForm").form("validate")){
+					    //发送ajax
+						$.ajax({
+							"url":"/standard",								//请求路径
+							"data": $("#standardForm").serializeJson(),		//请求参数（表单的所有数据）
+							"type":"post",										//请求方式
+							"statusCode":{
+							    200 : function( data ){
+							        //成功代码 (成功时，第一个参数仅为提示信息)
+									$.messager.alert("提示", data ,"info");
+									//关闭窗口和刷新datagrid
+                                    $("#standardWindow").window('close');
+                                    $('#grid').datagrid('reload');
+                                },
+								500 : function( data ){
+							        //失败代码 （失败时，第一个参数为失败的是有信息，reponseText为失败的提示信息）
+                                    $.messager.alert("提示",data.responseText ,"error");
+								}
+							}
+						});
+					}
+				});
+				
+				// 对收派标准 update按钮，添加click事件
+				$("#update").click(function(){
+					//表单校验
+					if( $("#updateForm").form("validate") ){
+					    //发送ajax进行更新操作
+						$.ajax({
+							"url" : "/standard",							//请求路径
+							"type" : "put",								//请求方式
+							"data" : $("#updateForm").serializeJson(),	//请求数据
+							"statusCode" : {								//处理响应状态码
+								200:function(data){
+								    //刷新datagrid
+									$("#grid").datagrid("reload");
+								    //提示
+								    $.messager.alert("提示",data , "info");
+								    //关闭窗口
+                                    $("#updateWindow").window("close");
+								},
+								500:function( data ){
+                                    $.messager.alert("提示",data.responseText , "info");
+								}
+							}
+						});
+					}
+				});
+				
+				
+				
+				
+				
+				
+				
+				
+			});	
+			
+			//工具栏
+			var toolbar = [ {
+				id : 'button-add',
+				text : '增加',
+				iconCls : 'icon-add',
+				handler : function(){
+					// 重置表单
+					$("#standardWindow").form('clear');
+					// alert('增加');
+					$("#standardWindow").window('open');
+				}
+			}, {
+				id : 'button-edit',
+				text : '修改',
+				iconCls : 'icon-edit',
+				handler : function(){
+					//1 获得datagrid选中的所有内容，返回的数组
+                    var all = $("#grid").datagrid( "getSelections" );
+
+					//2 判断长度是否为1，如果不是1，给出提示“修改数据时，只能选中一行”
+					if(all.length != 1){
+					    $.messager.alert("提示","修改数据时，只能选中一行","warning");
+					} else {
+						//3 如果是1，打开一个窗口，并填充表单。
+						//3.1 获得当前行的数据
+						var data = all[0];
+						//3.2 填充表单
+						$("#updateForm").form("load" , data );
+						//3.3 显示窗口
+						$("#updateWindow").window("open");
+					}
+				}
+			},{
+				id : 'button-delete',
+				text : '作废',
+				iconCls : 'icon-cancel',
+				handler : function(){
+					//获得选中所有内容
+					var all = $("#grid").datagrid("getSelections");
+					//如果没有选择，给出提示“你尚未选中数据，请先选中数据”
+					if(all.length == 0){
+					    $.messager.alert("提示","你尚未选中数据，请先选中数据","warning");
+					} else {
+						//如果选择
+						// 询问
+						$.messager.confirm("提示","您确定要删除吗？",function(r){
+						    //点击确认按钮
+						    if(r){
+								// 将id拼凑成逗号分隔的字符串 （数组push，数组join）
+								var idsArr = [];
+								for(var i = 0 ; i < all.length ; i ++){
+									var data = all[i];
+									idsArr.push( data.id );
+								}
+								var idsStr = idsArr.join(",");
+								// 发送ajax （post请求，需添加特殊内容 _method : "delete"）
+								$.ajax({
+									"url" : "/standard", 		//请求路径
+									"type" : "post", 			//请求方式
+									"data" : {					//请求参数(有特殊数据)
+										"ids" : idsStr ,
+										"_method" : "delete" ,
+									},
+									"statusCode" : {			//状态码处理
+										200:function(data){
+											$.messager.alert("提示",data,"info");
+											//刷新datagrid
+											$("#grid").datagrid("reload");
+										},
+										500:function(data){
+											$.messager.alert("提示",data.responseText,"error");
+										}
+									},
+								});
+
+							}
+						});
+					}
+				}
+			}];
+
+
+			//绘制datagrid
+			$(function(){
+			    //1 准备数据
+				//1.1 列描述
+				var columnsArr = [ [
+                    {field:'id',checkbox:true},
+                    {field:'name',title:'标准名称',width:100},
+                    {field:'minWeight',title:'最小重量',width:100},
+                    {field:'maxWeight',title:'最大重量',width:100},
+                    {field:'minLength',title:'最小长度',width:100},
+
+                    {field:'maxLength',title:'最大长度',width:100},
+                    {field:'operator',title:'操作员',width:100},
+                    {field:'operatingTime',title:'操作时间',width:100},
+                    {field:'operatingCompany',title:'操作单位',width:100},
+
+
+                ] ];
+				//1.2 请求路径
+				var url = "/standard";
+
+				//2 参数
+				var options = {
+				    "columns" :  columnsArr ,		//列描述
+					"toolbar" : toolbar ,			//工具条
+					"method" : "get",				//请求方式，查询必须是get
+					"url" : url ,					//请求路径
+					"pagination" :  true,			//分页
+					"rownumbers" : true ,			//行号
+					"pageSize" : 2 ,				//每页显示个数
+					"pageList" : [2,5,10,20] ,		//显示列表
+					"striped" : true 				//隔行换色
+				};
+				//3 绘制
+				$("#grid").datagrid( options  );
+			});
+
+			/*
+			var tool = [
+                {
+                    iconCls: 'icon-add',
+                    text : '增加',
+                    handler: function(){alert('编辑按钮')}
+                },
+                {
+                    iconCls: 'icon-edit',
+                    text : '修改',
+                    handler: function(){alert('编辑按钮')}
+                },
+                {
+                    iconCls: 'icon-cancel',
+                    text : '删除',
+                    handler: function(){alert('编辑按钮')}
+                },
+			];
+			*/
+
+		</script>
+	</head>
+
+	<body class="easyui-layout" style="visibility:hidden;">
+		<div region="center" border="false">
+			<table id="grid"></table>
+		</div>
+		
+		<div class="easyui-window" title="对收派标准进行添加或者修改" id="standardWindow" collapsible="false" minimizable="false" maximizable="false" modal="true" closed="true" style="width:600px;top:50px;left:200px">
+			<div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
+				<div class="datagrid-toolbar">
+					<a id="save" icon="icon-save" href="#" class="easyui-linkbutton" plain="true">保存</a>
+				</div>
+			</div>
+
+			<div region="center" style="overflow:auto;padding:5px;" border="false">
+				
+				<form id="standardForm">
+					<table class="table-edit" width="80%" align="center">
+						<tr class="title">
+							<td colspan="2">收派标准信息
+								<!--提供隐藏域 装载id -->
+								<input type="hidden" name="id" />
+							</td>
+						</tr>
+						<tr>
+							<td>收派标准名称</td>
+							<td>
+								<input type="text" name="name" 
+									class="easyui-validatebox" data-options="required:true" />
+							</td>
+						</tr>
+						<tr>
+							<td>最小重量</td>
+							<td>
+								<input type="text" name="minWeight" 
+										class="easyui-numberbox" required="true" />
+							</td>
+						</tr>
+						<tr>
+							<td>最大重量</td>
+							<td>
+								<input type="text" name="maxWeight" class="easyui-numberbox" required="true" />
+							</td>
+						</tr>
+						<tr>
+							<td>最小长度</td>
+							<td>
+								<input type="text" name="minLength" class="easyui-numberbox" required="true" />
+							</td>
+						</tr>
+						<tr>
+							<td>最大长度</td>
+							<td>
+								<input type="text" name="maxLength" class="easyui-numberbox" required="true" />
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			
+			
+			<!-- easyUI:update事件 -->
+		<div class="easyui-window" title="对收派标准进行添加或者修改" id="updateWindow" collapsible="false" minimizable="false" maximizable="false" modal="true" closed="true" style="width:600px;top:50px;left:200px">
+			<div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
+				<div class="datagrid-toolbar" id="saveOrUpdate">
+					<a id="update" icon="icon-save" href="#" class="easyui-linkbutton" plain="true">修改</a>
+				</div>
+			</div>
+
+			<div region="center" style="overflow:auto;padding:5px;" border="false">
+				
+				<form id="updateForm" action="#"  method="post">
+					<table class="table-edit" width="80%" align="center">
+						<tr class="title">
+							<td colspan="2">收派标准信息
+								<!--提供隐藏域 装载id -->
+								<input type="hidden" name="id" />
+							</td>
+						</tr>
+						<tr>
+							<td>收派标准名称</td>
+							<td>
+								<input type="text" name="name" 
+									class="easyui-validatebox" data-options="required:true" />
+							</td>
+						</tr>
+						<tr>
+							<td>最小重量</td>
+							<td>
+								<input type="text" name="minWeight" 
+										class="easyui-numberbox" required="true" />
+							</td>
+						</tr>
+						<tr>
+							<td>最大重量</td>
+							<td>
+								<input type="text" name="maxWeight" class="easyui-numberbox" required="true" />
+							</td>
+						</tr>
+						<tr>
+							<td>最小长度</td>
+							<td>
+								<input type="text" name="minLength" class="easyui-numberbox" required="true" />
+							</td>
+						</tr>
+						<tr>
+							<td>最大长度</td>
+							<td>
+								<input type="text" name="maxLength" class="easyui-numberbox" required="true" />
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+			
+			
+			
+		</div>
+	</body>
+
+</html>

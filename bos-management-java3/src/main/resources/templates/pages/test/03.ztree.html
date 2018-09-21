@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--引入公共内容-->
+    <span th:replace="/pages/common :: css('BOS管理系统 首页')"></span>
+    <span th:replace="/pages/common :: js"></span>
+
+    <!--导入ztree css和js-->
+    <link rel="stylesheet" href="/js/ztree/zTreeStyle.css" type="text/css" />
+    <script src="/js/ztree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
+
+</head>
+<body >
+    <!--基本html代码，需使用<ul>标签，并添加“ztree”样式-->
+    <ul id="treeDemo" class="ztree"></ul>
+
+</body>
+
+    <script type="text/javascript">
+        //1 基本设置
+        var option = {
+            data : {
+                simpleData : {
+                    enable : true       //显示文件夹
+                }
+            }
+        };
+
+        //2 数据
+        var data = [
+            {id:1 ,name:"小姐姐组"},
+            {id:2 ,name:"小哥哥组"},
+            {id:3 ,name:"霍冠田" ,pId : 1 },
+            {id:4 ,name:"刘澳辉" ,pId : 1 },
+            {id:5 ,name:"许可" ,pId : 2 },
+        ];
+
+        //渲染
+        $.fn.zTree.init(  $("#treeDemo") , option , data );
+    </script>
+
+</html>

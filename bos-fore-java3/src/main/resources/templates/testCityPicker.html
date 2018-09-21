@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--jquery-->
+    <script src="/plugins/jquery.min.js" type="text/javascript"></script>
+    <!--city picker需要-->
+    <link rel="stylesheet" type="text/css" href="/plugins/city-picker.css">
+    <script src="/plugins/city-picker.data.js" type="text/javascript"></script>
+    <script src="/plugins/city-picker.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        $(function(){
+
+            /*  如果在input标签添加 data-toggle="city-picker" 将自动绘制默认省市县联动
+
+             */
+
+            //自定义渲染
+            $("#area2").citypicker({
+                simple : true,                                    //是否显示简单模式，省市等后缀
+                level : 'district',                             //弹出层显示内容，取值：district、city、province
+                placeholder : '江苏省/宿迁市/沭阳县' ,          //默认值
+            });
+
+
+            $("#bid").click(function(){
+               //给area2重新赋值
+                $("#area2").citypicker("reset");
+                $("#area2").citypicker("destroy");
+
+                $("#area2").citypicker({
+                    province: '广东省',
+                    city: '深圳市',
+                    district: '宝安区'
+                });
+            });
+        });
+
+
+    </script>
+</head>
+<body>
+    <div style="position: relative;">
+        <input type="text" id="area" data-toggle="city-picker" size="80"/>
+
+        <input type="text" id="area2"  size="80"/>
+
+
+        <input type="button" value="点击我进行赋值" id="bid"/>
+    </div>
+</body>
+</html>

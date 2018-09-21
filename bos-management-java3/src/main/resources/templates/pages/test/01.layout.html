@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--引入公共内容-->
+    <span th:replace="/pages/common :: css('BOS管理系统 首页')"></span>
+    <span th:replace="/pages/common :: js"></span>
+
+</head>
+<body class="easyui-layout">
+    <div data-options="region:'north',split:true" style="height:100px;"></div>
+    <div data-options="region:'south',split:true" style="height:100px;"></div>
+    <div data-options="region:'west',title:'菜单',split:true" style="width:200px;"></div>
+    <div data-options="region:'center'" style="padding:5px;background:#eee;"></div>
+</body>
+
+
+</html>

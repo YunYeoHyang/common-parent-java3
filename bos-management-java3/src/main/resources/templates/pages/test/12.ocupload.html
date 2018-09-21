@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--引入公共内容-->
+    <span th:replace="/pages/common :: css('一键上传')"></span>
+    <span th:replace="/pages/common :: js"></span>
+
+    <script type="text/javascript" src="/js/ocupload/jquery.ocupload-1.1.2.js"></script>
+
+</head>
+<body >
+    <!--表单上传：跳转页面处理功能，同步操作-->
+    <form action="/index" method="post" enctype="multipart/form-data">
+        选择图片：<input type="file" name="image" /> <br/>
+        <input type="submit" value="上传" />
+    </form>
+
+    <!--一键上传: jQuery的插件，可以完成异步上传。-->
+    <input id="bid" type="button" value="一键上传"/>
+
+    <script type="text/javascript">
+        $("#bid").upload({
+            "action" : "/index"         //确定文件上传位置
+        });
+
+    </script>
+
+</body>
+
+
+</html>

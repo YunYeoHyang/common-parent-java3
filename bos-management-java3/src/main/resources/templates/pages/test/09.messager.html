@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--引入公共内容-->
+    <span th:replace="/pages/common :: css('BOS管理系统 首页')"></span>
+    <span th:replace="/pages/common :: js"></span>
+
+    <script type="text/javascript">
+        /*
+        //警告窗口
+        $.messager.alert("点我试试","我张迪就不试！","info");
+        $.messager.alert("点我试试","我张迪就不试！","error",function(){
+            alert("确定被点击");
+        });
+        */
+
+        /*
+        //	确认消息窗口
+        $.messager.confirm("提示","真的要走吗？",function(r){
+            if(r){
+                alert("确定按钮，执行代码");
+            } else {
+                alert("取消按钮，执行代码");
+            }
+        });
+        */
+
+        //右下角气泡窗口
+        $.messager.show({
+            title:'我的消息',
+            msg:'消息将在5秒后关闭。',
+            timeout:5000,
+            showType:'slide'
+        });
+
+
+    </script>
+
+</head>
+<body >
+
+</body>
+</html>

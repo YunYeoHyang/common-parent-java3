@@ -1,0 +1,10 @@
+{
+	"total":100,	
+	"rows":[ 
+		{"id":"0011","subArchiveName":"干线","archive.id":"001","mnemonicCode":"gx","mothballed":"","remark":""},
+		{"id":"0012","subArchiveName":"周边","archive.id":"001","mnemonicCode":"zb","mothballed":"","remark":""},
+		{"id":"0013","subArchiveName":"省内","archive.id":"001","mnemonicCode":"sn","mothballed":"","remark":""},
+		{"id":"0014","subArchiveName":"临时","archive.id":"001","mnemonicCode":"ls","mothballed":"","remark":""},
+		{"id":"0015","subArchiveName":"市内","archive.id":"001","mnemonicCode":"sn","mothballed":"","remark":""}
+	]
+}

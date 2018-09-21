@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="../jquery-1.8.3.js" ></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js" ></script>
+	<script type="text/javascript" src="../easyui/locale/easyui-lang-zh_CN.js" ></script>
+	<link rel="stylesheet" href="../easyui/themes/default/easyui.css" />
+	<link rel="stylesheet" href="../easyui/themes/icon.css" />
+	<title>Insert title here</title>
+	<script type="text/javascript">
+		$(function(){
+			$("#saveBtn").click(function(){
+				if($("#myform").form('validate')){
+					//表单提交
+					console.info("校验通过");
+				}
+			})
+			
+		});
+	</script>
+	
+</head>
+<body>
+	<input type="button" value="保存" id="saveBtn"  />
+	<form id="myform" name="myform" action="http://www.baidu.com">
+	 	邮箱验证：<input type="text" name="email" class="easyui-validatebox" validtype="email" required="true" missingMessage="不能为空" invalidMessage="邮箱格式不正确" /><br/>  
+		网址验证：<input type="text" name="url" class="easyui-validatebox" validtype="url" required="true" missingMessage="不能为空"/><br/>  
+		长度验证：<input type="text" name="length" class="easyui-validatebox" validtype="length[8,20]" required="true" missingMessage="不能为空" invalidMessage="有效长度8-20"/><br/>  
+		远程验证：<input type="text" name="remote" class="easyui-validatebox" validtype="remote['check.jsp','name']" required="true" missingMessage="不能为空" invalidMessage="用户名已存在"/><br/>
+		
+		最小重量：<input type="text" name="minWeight" class="easyui-numberbox" required="true" /> <br/>
+		生日：<input id="birthday" type="text" class="easyui-datebox" required="required" /> <br/>
+		部门：<select id="dept" class="easyui-combobox" required="true" name="dept" style="width:200px;"> 
+				<option value="1">行政部</option> 
+				<option>人事部</option> 
+				<option>教学部</option> 
+				<option>市场部</option> 
+				<option>学工部</option> 
+			</select> 
+		
+	</form>
+	
+</body>
+</html>
