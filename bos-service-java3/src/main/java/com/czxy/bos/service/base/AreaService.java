@@ -100,4 +100,14 @@ public class AreaService {
         }
         return count;
     }
+
+    /**
+     * 人工分单
+     * 通过省市县查询地区
+     * @param area
+     * @return
+     */
+    public Area selectByArea(Area area){
+        return areaMapper.selectByArea(area);
+    }
 }

@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-/**
- * Created by liangtong on 2018/9/10.
- */
 @RestController
 @RequestMapping("/crmCustomer")
 public class CrmCustomerController {
@@ -122,7 +119,15 @@ public class CrmCustomerController {
         return new ResponseEntity<Customer>(customer , HttpStatus.OK);
     }
 
-
-
-
+    /**
+     * 通过地址和客户id查询定区id
+     * @param address
+     * @param customerId
+     * @return
+     */
+    @GetMapping("/findFixedAreaIdByAddressAndID")
+    public ResponseEntity<String> findFixedAreaIdByAddressAndID(String address , String customerId){
+        String fixedAreaId = crmCustomerService.findFixdAreaIdByAddressAndID(address , customerId);
+        return new ResponseEntity<>(fixedAreaId,HttpStatus.OK);
+    }
 }

@@ -11,9 +11,6 @@ import tk.mybatis.mapper.entity.Example;
 import javax.annotation.Resource;
 import java.util.List;
 
-/**
- * Created by liangtong on 2018/9/10.
- */
 @Service
 @Transactional
 public class CrmCustomerService {
@@ -143,8 +140,23 @@ public class CrmCustomerService {
         return this.crmCustomerMapper.selectOneByExample( example );
     }
 
-
-
+    /**
+     * 通过地址和客户id查询定区id
+     * @param address
+     * @param customerId
+     * @return
+     */
+    public String findFixdAreaIdByAddressAndID(String address, String customerId) {
+        Example example = new Example(Customer.class);
+        example.createCriteria()
+                .andEqualTo("address", address)
+                .andEqualTo("id", customerId);
+        Customer customer = crmCustomerMapper.selectOneByExample(example);
+        if(customer != null){
+            return customer.getFixedAreaId();
+        }
+        return null;
+    }
 }
 
 
