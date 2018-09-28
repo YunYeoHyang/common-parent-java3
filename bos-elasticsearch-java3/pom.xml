@@ -9,19 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>bos-service-java3</artifactId>
-    <dependencies>
-        <dependency>
-            <groupId>com.czxy.bos</groupId>
-            <artifactId>bos-dao-java3</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.czxy.bos</groupId>
-            <artifactId>bos-elasticsearch-java3</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+    <artifactId>bos-elasticsearch-java3</artifactId>
 
 
 </project>

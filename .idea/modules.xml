@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/bos-dao-java3/bos-dao-java3.iml" filepath="$PROJECT_DIR$/bos-dao-java3/bos-dao-java3.iml" />
       <module fileurl="file://$PROJECT_DIR$/bos-domain-java3/bos-domain-java3.iml" filepath="$PROJECT_DIR$/bos-domain-java3/bos-domain-java3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bos-elasticsearch-java3/bos-elasticsearch-java3.iml" filepath="$PROJECT_DIR$/bos-elasticsearch-java3/bos-elasticsearch-java3.iml" />
       <module fileurl="file://$PROJECT_DIR$/bos-fore-java3/bos-fore-java3.iml" filepath="$PROJECT_DIR$/bos-fore-java3/bos-fore-java3.iml" />
       <module fileurl="file://$PROJECT_DIR$/bos-management-java3/bos-management-java3.iml" filepath="$PROJECT_DIR$/bos-management-java3/bos-management-java3.iml" />
       <module fileurl="file://$PROJECT_DIR$/bos-service-java3/bos-service-java3.iml" filepath="$PROJECT_DIR$/bos-service-java3/bos-service-java3.iml" />

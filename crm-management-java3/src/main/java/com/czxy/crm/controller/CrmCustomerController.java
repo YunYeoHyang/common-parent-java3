@@ -127,7 +127,7 @@ public class CrmCustomerController {
      */
     @GetMapping("/findFixedAreaIdByAddressAndID")
     public ResponseEntity<String> findFixedAreaIdByAddressAndID(String address , String customerId){
-        String fixedAreaId = crmCustomerService.findFixdAreaIdByAddressAndID(address , customerId);
+        String fixedAreaId = crmCustomerService.findFixedAreaIdByAddressAndID(address , customerId);
         return new ResponseEntity<>(fixedAreaId,HttpStatus.OK);
     }
 }

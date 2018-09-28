@@ -146,8 +146,11 @@ public class CrmCustomerService {
      * @param customerId
      * @return
      */
-    public String findFixdAreaIdByAddressAndID(String address, String customerId) {
+    public String findFixedAreaIdByAddressAndID(String address, String customerId) {
         Example example = new Example(Customer.class);
+        System.out.println(address + customerId);
+
+
         example.createCriteria()
                 .andEqualTo("address", address)
                 .andEqualTo("id", customerId);

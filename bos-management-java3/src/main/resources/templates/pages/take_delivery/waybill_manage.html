@@ -15,47 +15,47 @@
 		<script type="text/javascript" src="../../js/easyui/ext/jquery.portal.js"></script>
 		<script type="text/javascript" src="../../js/easyui/ext/jquery.cookie.js"></script>
 		<script src="../../js/easyui/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
-		
+
 		<script type="text/javascript" src="../../js/highcharts/highcharts.js"></script>
 		<script type="text/javascript" src="../../js/highcharts/modules/exporting.js"></script>
 		<script type="text/javascript" src="../../js/highcharts/highcharts-3d.js"></script>
-	
+
 		<script type="text/javascript">
-			$.fn.serializeJson=function(){  
-				var serializeObj={};  
-				var array=this.serializeArray();  
-				var str=this.serialize();  
-				$(array).each(function(){  
-					if(serializeObj[this.name]){  
-						if($.isArray(serializeObj[this.name])){  
-							serializeObj[this.name].push(this.value);  
-						}else{  
+			$.fn.serializeJson=function(){
+				var serializeObj={};
+				var array=this.serializeArray();
+				var str=this.serialize();
+				$(array).each(function(){
+					if(serializeObj[this.name]){
+						if($.isArray(serializeObj[this.name])){
+							serializeObj[this.name].push(this.value);
+						}else{
 							serializeObj[this.name]=[serializeObj[this.name],this.value];
-						}  
-					}else{  
-						serializeObj[this.name]=this.value;   
-					}  
-				});  
-				return serializeObj;  
-			}; 
+						}
+					}else{
+						serializeObj[this.name]=this.value;
+					}
+				});
+				return serializeObj;
+			};
 			function doSearch() {
-				// 将form内容，转换为json 
+				// 将form内容，转换为json
 				var queryParams = $("#searchForm").serializeJson();
-				
-				// 绑定数据表格 重新加载数据 
+
+				// 绑定数据表格 重新加载数据
 				$('#tt').datagrid('load', queryParams);
 			}
-			
+
 			$(function(){
 				// 开启运输管理 按钮
 				$("#transitBtn").click(function(){
-					// 获取数据表格所有选中行 
+					// 获取数据表格所有选中行
 					var rows = $("#tt").datagrid('getSelections');
 					if(rows.length == 0){
 						// 没有选中
 						$.messager.alert('警告','必须选中运单信息','warning');
 					}else{
-						// 选中运单 ，获取选中运单id 
+						// 选中运单 ，获取选中运单id
 						var array = new Array();
 						for(var i=0; i<rows.length; i++){
 						    if(rows[i].signStatus==2){
@@ -76,45 +76,45 @@
 								500:function(){
 									$.messager.alert('提示','操作失败');
 								}
-								
+
 							}
 						});
 
 					}
 				});
-				  
-				// 导出Excel 按钮 
+
+				// 导出Excel 按钮
 				$("#exportXlsBtn").click(function(){
-					// 下载效果 
+					// 下载效果
 					$("#searchForm").attr("action", "/report/exportXls.html");
 					$("#searchForm").submit();
 
 				});
-				
-				// 导出 PDF 按钮 
+
+				// 导出 PDF 按钮
 				$("#exportPdfBtn").click(function(){
-					// 下载效果 
+					// 下载效果
 					$("#searchForm").attr("action", "/report/exportPdf.html");
 					$("#searchForm").submit();
 				});
-				
-				// 结合模板 导出 PDF 按钮 
+
+				// 结合模板 导出 PDF 按钮
 				$("#exportJasperPdfBtn").click(function(){
-					// 下载效果 
+					// 下载效果
 					$("#searchForm").attr("action", "../../report_exportJasperPdf.action");
 					$("#searchForm").submit();
 				});
-				
+
 				// 运单统计情况
 				$("#exportHighChartBtn").click(function(){
-				    
+
 					// 弹出窗口
 					$("#waybillWindow").window('open');
-					
+
 					 // 使用highchart统计运单数量
 					var jsonXData = [];
-					var jsonYData = []; 
-					$.get("/report/exportHighcharts.html",{},function(data){
+					var jsonYData = [];
+					$.get("/report/exportHighcharts",{},function(data){
 						if(data!=null && data.length>0){
 							for(var i=0;i<data.length;i++){
 								//alert(data[i].name);
@@ -123,7 +123,7 @@
 								jsonYData.push(parseInt(data[i].data));
 							}
 						}
-						
+
 						$("#container").highcharts({
 							chart : {
 								type : 'column',
@@ -160,7 +160,7 @@
 							}]
 						});
 					});
-				    
+
 				});
 			});
 		</script>
@@ -168,33 +168,33 @@
 
 	<body>
 		<div id="tb">
-			<a id="save" icon="icon-edit" href="#" class="easyui-linkbutton" plain="true">修改</a>
-			<a id="cut" icon="icon-cut" href="#" class="easyui-linkbutton" plain="true">作废</a>
-			<a id="help" icon="icon-help" href="#" class="easyui-linkbutton" plain="true">任务提示</a>
-			<a id="help" icon="icon-print" href="#" class="easyui-linkbutton" plain="true">打印查询结果</a>
-			<a id="help" icon="icon-cancel" href="#" class="easyui-linkbutton" plain="true">取消</a>
-			<a id="help" icon="icon-save" href="#" class="easyui-linkbutton" plain="true">保存</a>
-			<a id="help" icon="icon-print" href="#" class="easyui-linkbutton" plain="true">打印标签</a>
-			<a id="help" icon="icon-print" href="#" class="easyui-linkbutton" plain="true">打印工作单</a>
-			<a id="transitBtn" icon="icon-edit" href="#" class="easyui-linkbutton" plain="true">开始中转配送</a>
-			<a id="exportXlsBtn" icon="icon-print" href="#" class="easyui-linkbutton" plain="true">导出Excel报表</a>
-			<a id="exportPdfBtn" icon="icon-print" href="#" class="easyui-linkbutton" plain="true">导出PDF报表</a>	
-			<a id="exportJasperPdfBtn" icon="icon-print" href="#" class="easyui-linkbutton" plain="true">结合模板导出PDF报表</a>	
-			<a id="exportHighChartBtn" icon="icon-print" href="#" class="easyui-linkbutton" plain="true">运单统计情况</a>
-			
+			<a id="edit" icon="icon-edit" href="javascript:void(0)" class="easyui-linkbutton" plain="true">修改</a>
+			<a id="cut" icon="icon-cut" href="javascript:void(0)" class="easyui-linkbutton" plain="true">作废</a>
+			<a id="help" icon="icon-help" href="javascript:void(0)" class="easyui-linkbutton" plain="true">任务提示</a>
+			<a id="print1" icon="icon-print" href="javascript:void(0)" class="easyui-linkbutton" plain="true">打印查询结果</a>
+			<a id="cancel" icon="icon-cancel" href="javascript:void(0)" class="easyui-linkbutton" plain="true">取消</a>
+			<a id="save" icon="icon-save" href="javascript:void(0)" class="easyui-linkbutton" plain="true">保存</a>
+			<a id="print2" icon="icon-print" href="javascript:void(0)" class="easyui-linkbutton" plain="true">打印标签</a>
+			<a id="print3" icon="icon-print" href="javascript:void(0)" class="easyui-linkbutton" plain="true">打印工作单</a>
+			<a id="transitBtn" icon="icon-edit" href="javascript:void(0)" class="easyui-linkbutton" plain="true">开始中转配送</a>
+			<a id="exportXlsBtn" icon="icon-print" href="javascript:void(0)" class="easyui-linkbutton" plain="true">导出Excel报表</a>
+			<a id="exportPdfBtn" icon="icon-print" href="javascript:void(0)" class="easyui-linkbutton" plain="true">导出PDF报表</a>
+			<a id="exportJasperPdfBtn" icon="icon-print" href="javascript:void(0)" class="easyui-linkbutton" plain="true">结合模板导出PDF报表</a>
+			<a id="exportHighChartBtn" icon="icon-print" href="javascript:void(0)" class="easyui-linkbutton" plain="true">运单统计情况</a>
+
 			<br />
 			<form id="searchForm" method="get">
 				运单号：<input name="wayBillNum" style="line-height:26px;border:1px solid #ccc">
 				发货地：<input name="sendAddress" style="line-height:26px;border:1px solid #ccc" >
 				收货地：<input name="recAddress" style="line-height:26px;border:1px solid #ccc" >
-				
+
 				<select class="easyui-combobox" style="width:150px" name="sendProNum">
 					<option value="">请选择快递产品类型</option>
 					<option value="速运当日">速运当日</option>
 					<option value="速运次日">速运次日</option>
 					<option value="速运隔日">速运隔日</option>
 				</select>
-				
+
 				<select class="easyui-combobox" style="width:150px" name="signStatus">
 					<option value="0">请选择运单状态</option>
 					<option value="1">待发货</option>
@@ -202,12 +202,12 @@
 					<option value="3">已签收</option>
 					<option value="4">异常</option>
 				</select>
-				
-				<a href="javascript:void" class="easyui-linkbutton" 
-					plain="true" onclick="doSearch()">查询</a> 
+
+				<a href="javascript:void(0)" class="easyui-linkbutton"
+					plain="true" onclick="doSearch()">查询</a>
 			</form>
 		</div>
-		<table id="tt" url="/wayBill/pageQuery.html" method="get" class="easyui-datagrid" fit="true" toolbar="#tb" rownumbers="true" pagination="true">
+		<table id="tt" url="/wayBill/pageQuery" method="get" class="easyui-datagrid" fit="true" toolbar="#tb" rownumbers="true" pagination="true">
 			<thead>
 				<tr>
 					<th field="ck" checkbox="true"></th>
@@ -232,11 +232,11 @@
 				</tr>
 			</thead>
 		</table>
-		
+
 		<div class="easyui-window" title="运单统计" id="waybillWindow" modal="true" closed="true" collapsible="false" minimizable="false" maximizable="false" style="width: 800px; height: 450px">
 			<div id="container"></div>
 		</div>
-		
+
 	</body>
 
 </html>

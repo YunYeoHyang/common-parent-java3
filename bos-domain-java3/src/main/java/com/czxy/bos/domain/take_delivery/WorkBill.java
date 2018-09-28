@@ -54,6 +54,22 @@ public class WorkBill {
 	@Transient
 	private Order order; // 订单
 
+	public void setCourierId(Integer courierId) {
+		this.courierId = courierId;
+	}
+
+	public Integer getCourierId() {
+		return courierId;
+	}
+
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
+
+	public Integer getOrderId() {
+		return orderId;
+	}
+
 	public Integer getId() {
 		return id;
 	}

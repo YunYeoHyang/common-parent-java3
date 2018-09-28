@@ -19,6 +19,7 @@
 		<module>crm-management-java3</module>
         <module>bos-fore-java3</module>
         <module>bos-sms-java3</module>
+        <module>bos-elasticsearch-java3</module>
     </modules>
 	<packaging>pom</packaging>
 

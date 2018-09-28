@@ -36,6 +36,22 @@ public class SubArea {
 	@Transient
 	private FixedArea fixedArea; // 定区
 
+	public void setAreaId(String areaId) {
+		this.areaId = areaId;
+	}
+
+	public String getAreaId() {
+		return areaId;
+	}
+
+	public void setFixedAreaId(String fixedAreaId) {
+		this.fixedAreaId = fixedAreaId;
+	}
+
+	public String getFixedAreaId() {
+		return fixedAreaId;
+	}
+
 	public String getId() {
 		return id;
 	}

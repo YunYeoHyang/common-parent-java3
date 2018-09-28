@@ -25,10 +25,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="bos-dao-java3" />
-    <orderEntry type="module" module-name="bos-domain-java3" />
-    <orderEntry type="module" module-name="bos-util-java3" />
-    <orderEntry type="module" module-name="bos-elasticsearch-java3" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-cache:2.0.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.0.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-logging:2.0.4.RELEASE" level="project" />
