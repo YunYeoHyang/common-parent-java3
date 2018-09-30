@@ -1,13 +1,11 @@
 package com.czxy.bos.exception;
 
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-/** 全局异常处理类
- * Created by liangtong on 2018/9/4.
- */
 @ControllerAdvice           //对当前项目的所有的controller进行增强
 public class GlobalExceptionHandler {
 
@@ -18,11 +16,11 @@ public class GlobalExceptionHandler {
         if(e instanceof BosException){
             //自定义异常，显示异常中的信息
             return new ResponseEntity<String>(e.getMessage() , HttpStatus.INTERNAL_SERVER_ERROR);
-        } else {
-            //如果不是
+        } else if ( e instanceof UnauthorizedException){
+            //其他异常
+            return new ResponseEntity<>("权限不足！" , HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            // 如果不是
             return new ResponseEntity<String>("服务器异常，请稍后重试" , HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
-
-
 }

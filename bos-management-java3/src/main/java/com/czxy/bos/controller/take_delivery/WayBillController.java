@@ -5,6 +5,7 @@ import com.czxy.bos.es.domain.EsWayBill;
 import com.czxy.bos.service.take_delivery.WayBillService;
 import com.czxy.bos.vo.EasyUIResult;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,7 @@ public class WayBillController {
      * @param wayBill
      * @return
      */
+    @RequiresPermissions( "waybill:add" )
     @PostMapping
     public ResponseEntity<String> saveWayBill(WayBill wayBill){
         wayBillService.saveWayBill(wayBill);

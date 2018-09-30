@@ -26,23 +26,23 @@
 					var formValues = $("#loginform").serialize();
 					
 					$.ajax({
-						url:'/user/login.html',
-						method:'get',
-						data:formValues,
-						dataType:'json',
-						 statusCode : {
+						url : '/user/login',
+						method : 'get',
+						data : formValues,
+						dataType : 'json',
+						statusCode : {
 							   200 : function(data){
 								  //alert(data.responseText);
 								  $.messager.alert("提示",data.responseText,"info",function(){
 									  
 								  });
-								  setTimeout(" window.location.href='./index.html'", 1000);
+								  setTimeout(" window.location.href='/index'", 1000);
 							   },
 							   400 : function(data){
-								  alert('提示，参数有误!');
+                                   $.messager.alert("提示","参数有误","warning");
 							   },
 							   500 : function(data){
-								  alert(data.responseText);
+                                   $.messager.alert("提示",data.responseText,"warning");
 							   }
 						   }
 					});
@@ -101,7 +101,7 @@
 							</div>
 						</div>
 						<div class="col-md-offset-3 col-md-8">
-							<a id="loginBtn" href="javascript:void(0)" id="loginform:j_id19" name="loginform:j_id19"
+							<a id="loginBtn" href="javascript:void(0)" name="loginform:j_id19"
 								 class="btn btn-danger" target="_blank">立即登录</a>
 							
 						</div>
