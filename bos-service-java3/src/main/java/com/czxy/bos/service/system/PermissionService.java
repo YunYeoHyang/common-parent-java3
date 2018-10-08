@@ -3,6 +3,8 @@ package com.czxy.bos.service.system;
 import com.czxy.bos.dao.system.PermissionMapper;
 import com.czxy.bos.domain.system.Permission;
 import com.czxy.bos.domain.system.User;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,18 @@ public class PermissionService {
             return permissionMapper.selectAll();
         }
         return permissionMapper.findByUser(user.getId());
+    }
+
+    /**
+     * 查询所有
+     * @param page
+     * @param rows
+     * @return
+     */
+    public PageInfo<Permission> findAllPermissionList(Integer page , Integer rows) {
+        PageHelper.startPage( page ,rows);
+        List<Permission> list = permissionMapper.selectAll();
+        return new PageInfo<>( list );
     }
 
 }
