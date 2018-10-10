@@ -1,43 +1,60 @@
 <!DOCTYPE html>
-<<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<span th:replace="pages/common :: css('权限列表页面')"></span>
+
 	<span th:replace="pages/common :: js"></span>
 
-		<script type="text/javascript">
-			$(function(){
-				$("#grid").datagrid({
-					toolbar : [
-						{
-							id : 'add',
-							text : '添加权限',
-							iconCls : 'icon-add',
-							handler : function(){
-								location.href='/pages/system/permission_add';
-							}
-						}           
-					],
-					url : '/permission',
-					method:'get',
-					pagination:true,
+	<script type="text/javascript">
+         $(function(){
+            $("#grid").datagrid({
+               toolbar : [
+                  {
+                     id : 'add',
+                     text : '添加权限',
+                     iconCls : 'icon-add',
+                     handler : function(){
+                        location.href='/pages/system/permission_add';
+                     }
+                  }
+               ],
+               url : '/permission',
+               method:'get',
+                    pagination:true,
                     pageSize:5,
                     pageList:[2,5,10],
-					columns : [ [
-					  {field : 'id',title : '编号',width : 200},
-					  {field : 'name',title : '名称',width : 200},
-					  {field : 'keyword',title : '关键字',width : 200},
-					  {field : 'description',title : '描述',width : 200}
-					] ]
-				});
-			});
-		</script>
-	</head>
+               columns : [ [
+                 {
+                    field : 'id',
+                    title : '编号',
+                    width : 200
+                 },
+                 {
+                    field : 'name',
+                    title : '名称',
+                    width : 200
+                 },
+                 {
+                    field : 'keyword',
+                    title : '关键字',
+                    width : 200
+                 },
+                 {
+                    field : 'description',
+                    title : '描述',
+                    width : 200
+                 }
+               ] ]
+            });
+         });
+      </script>
+</head>
 
-	<body class="easyui-layout">
-		<div data-options="region:'center'">
-			<table id="grid"></table>
-		</div>
-	</body>
+<body class="easyui-layout">
+<div data-options="region:'center'">
+	<table id="grid"></table>
+</div>
+</body>
 
 </html>

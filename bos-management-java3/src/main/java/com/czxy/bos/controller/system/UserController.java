@@ -2,12 +2,15 @@ package com.czxy.bos.controller.system;
 
 import com.czxy.bos.domain.system.User;
 import com.czxy.bos.service.system.UserService;
+import com.czxy.bos.vo.EasyUIResult;
+import com.github.pagehelper.PageInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,5 +50,18 @@ public class UserController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<EasyUIResult<User>> findAllUserList(Integer page , Integer rows){
+        PageInfo<User> pageInfo = userService.findAllUserList(page ,rows);
+        EasyUIResult result = new EasyUIResult(pageInfo.getTotal() ,pageInfo.getList());
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
 
+    @PostMapping
+    public ResponseEntity<Void> saveUser(User user){
+        String[] roleIds= user.getRoleIds();
+        // 调用业务层
+        userService.saveUser(user, roleIds);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }

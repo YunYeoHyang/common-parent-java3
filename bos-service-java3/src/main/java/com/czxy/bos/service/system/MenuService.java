@@ -46,4 +46,8 @@ public class MenuService {
 
         menuMapper.insert(menu);
     }
+
+    public List<Menu> findAll() {
+        return menuMapper.selectAll();
+    }
 }

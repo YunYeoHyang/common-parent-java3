@@ -49,8 +49,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/services/**", "anon");
 
 
-        filterChainDefinitionMap.put("/pages/base/courier.html*", "perms[courier:list]");
-        filterChainDefinitionMap.put("/pages/base/area.html*", "roles[base]");
+        filterChainDefinitionMap.put("/pages/base/courier", "perms[courier:list]");
+        filterChainDefinitionMap.put("/pages/base/area", "roles[base]");
 
 
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;

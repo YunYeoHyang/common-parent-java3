@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/menu")
@@ -37,5 +38,11 @@ public class MenuController {
     public ResponseEntity<Void> addMenu(Menu menu){
         menuService.save(menu);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<Menu>> findAll(){
+        List<Menu> list = menuService.findAll();
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }
