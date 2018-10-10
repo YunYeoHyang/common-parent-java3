@@ -11,195 +11,160 @@
 					visibility: "visible"
 				});
 
-				var transitToolbar = [{
-					id: 'button-inoutstore',
-					text: '出入库',
-					iconCls: 'icon-add',
-					handler: function() {
-						// 判断是否选中一条记录
-						var row = $("#transitGrid").datagrid('getSelected');
-						if(row == null){
+				/*工具栏  Start*/
+				var transitToolbar = [
+				    {id: 'button-inoutstore', text: '出入库', iconCls: 'icon-add',
+						handler: function() {
+							// 判断是否选中一条记录
+							var row = $("#transitGrid").datagrid('getSelected');
+							if(row == null){
 							// 没有选中运输记录
 							$.messager.alert('警告','必须要先选中一条记录','warning');
 							return;
+							}
+							// 判断运输状态是否为“出入库”
+							if(row.status == '出入库中转'){
+								// 在表单隐藏域保存当前操作中转信息
+								$("#inOutStoreId").val(row.id);
+								// 回显运输配送信息
+								$("#inOutStoreTransitInfoView").text("");//清空数据
+								$("#inOutStoreTransitInfoView").append("运单号："+ row.wayBill.wayBillNum + "</br>");
+								$("#inOutStoreTransitInfoView").append("货物类型："+ row.wayBill.goodsType + "</br>");
+								$("#inOutStoreTransitInfoView").append("发货地："+ row.wayBill.sendAddress + "</br>");
+								$("#inOutStoreTransitInfoView").append("收货地："+ row.wayBill.recAddress + "</br>");
+								// transferInfo属性在实体中不存在，需要手动进行设置。
+								$("#inOutStoreTransitInfoView").append("物流信息："+ row.transferInfo + "</br>");
+							}
+							else{
+								// 状态不为出入库中转，不必进行出入库操作
+								$.messager.alert('警告','进行出入库操作，必须操作状态为出入库中转的运单','warning');
+								return;
+							}
+							$("#inoutstoreWindow").window('open');
+						}},
+					{id: 'button-delivery', text: '开始配送', iconCls: 'icon-print',
+						handler: function() {
+							// 判断是否选中一条记录
+							var row = $("#transitGrid").datagrid('getSelected');
+							if(row == null){
+								// 没有选中运输记录
+								$.messager.alert('警告','必须要先选中一条记录','warning');
+								return;
+							}
+							// 判断运输状态是否为“出入库”
+							if(row.status == '到达网点'){
+								// 在表单隐藏域保存当前操作中转信息id
+								$("#deliveryId").val(row.id);
+								// 回显运输配送信息
+								$("#deliveryTransitInfoView").text("");//清空数据
+								$("#deliveryTransitInfoView").append("运单号："+ row.wayBill.wayBillNum + "</br>");
+								$("#deliveryTransitInfoView").append("货物类型："+ row.wayBill.goodsType + "</br>");
+								$("#deliveryTransitInfoView").append("发货地："+ row.wayBill.sendAddress + "</br>");
+								$("#deliveryTransitInfoView").append("收货地："+ row.wayBill.recAddress + "</br>");
+								// transferInfo属性在实体中不存在，需要手动进行设置。
+								$("#deliveryTransitInfoView").append("物流信息："+ row.transferInfo + "</br>");
+							}
+							else{
+								// 状态不为出入库中转，不必进行出入库操作
+								$.messager.alert('警告','进行开始配送操作，必须操作状态为到达网点的运单','warning');
+								return;
+							}
+							$("#deliveryWindow").window('open');
 						}
-						// 判断运输状态是否为“出入库”
-						if(row.status == '出入库中转'){
-							// 在表单隐藏域保存当前操作中转信息
-							$("#inOutStoreId").val(row.id);
-							// 回显运输配送信息
-							$("#inOutStoreTransitInfoView").text("");//清空数据
-							$("#inOutStoreTransitInfoView").append("运单号："+ row.wayBill.wayBillNum + "</br>");
-							$("#inOutStoreTransitInfoView").append("货物类型："+ row.wayBill.goodsType + "</br>");
-							$("#inOutStoreTransitInfoView").append("发货地："+ row.wayBill.sendAddress + "</br>");
-							$("#inOutStoreTransitInfoView").append("收货地："+ row.wayBill.recAddress + "</br>");
-							// transferInfo属性在实体中不存在，需要手动进行设置。
-							$("#inOutStoreTransitInfoView").append("物流信息："+ row.transferInfo + "</br>");
+					},
+					{id: 'button-sign', text: '签收录入', iconCls: 'icon-save',
+						handler: function() {
+							// 判断是否选中一条记录
+							var row = $("#transitGrid").datagrid('getSelected');
+							if(row == null){
+								// 没有选中运输记录
+								$.messager.alert('警告','必须要先选中一条记录','warning');
+								return;
+							}
+							// 判断运输状态是否为“出入库”
+							if(row.status == '开始配送'){
+								// 在表单隐藏域保存当前操作中转信息id
+								$("#signId").val(row.id);
+								// 回显运输配送信息
+								$("#signTransitInfoView").text("");//清空数据
+								$("#signTransitInfoView").append("运单号："+ row.wayBill.wayBillNum + "</br>");
+								$("#signTransitInfoView").append("货物类型："+ row.wayBill.goodsType + "</br>");
+								$("#signTransitInfoView").append("发货地："+ row.wayBill.sendAddress + "</br>");
+								$("#signTransitInfoView").append("收货地："+ row.wayBill.recAddress + "</br>");
+								// transferInfo属性在实体中不存在，需要手动进行设置。
+								$("#signTransitInfoView").append("物流信息："+ row.transferInfo + "</br>");
+							}
+							else{
+								// 状态不为出入库中转，不必进行出入库操作
+								$.messager.alert('警告','进行签收录入操作，必须操作状态为开始配送的运单','warning');
+								return;
+							}
+							$("#signWindow").window('open');
 						}
-						else{
-							// 状态不为出入库中转，不必进行出入库操作
-							$.messager.alert('警告','进行出入库操作，必须操作状态为出入库中转的运单','warning');
-							return;
+					},
+					{id: 'button-transit', text: '运输路径', iconCls: 'icon-search',
+						handler: function() {
+							// 弹出窗口
+							$("#transitPathWindow").window('open');
 						}
-						$("#inoutstoreWindow").window('open');
-					}
-				}, {
-					id: 'button-delivery',
-					text: '开始配送',
-					iconCls: 'icon-print',
-					handler: function() {
-						// 判断是否选中一条记录
-						var row = $("#transitGrid").datagrid('getSelected');
-						if(row == null){
-							// 没有选中运输记录
-							$.messager.alert('警告','必须要先选中一条记录','warning');
-							return;
-						}
-						// 判断运输状态是否为“出入库”
-						if(row.status == '到达网点'){
-							// 在表单隐藏域保存当前操作中转信息id
-							$("#deliveryId").val(row.id);
-							// 回显运输配送信息
-							$("#deliveryTransitInfoView").text("");//清空数据
-							$("#deliveryTransitInfoView").append("运单号："+ row.wayBill.wayBillNum + "</br>");
-							$("#deliveryTransitInfoView").append("货物类型："+ row.wayBill.goodsType + "</br>");
-							$("#deliveryTransitInfoView").append("发货地："+ row.wayBill.sendAddress + "</br>");
-							$("#deliveryTransitInfoView").append("收货地："+ row.wayBill.recAddress + "</br>");
-							// transferInfo属性在实体中不存在，需要手动进行设置。
-							$("#deliveryTransitInfoView").append("物流信息："+ row.transferInfo + "</br>");
-						}
-						else{
-							// 状态不为出入库中转，不必进行出入库操作
-							$.messager.alert('警告','进行开始配送操作，必须操作状态为到达网点的运单','warning');
-							return;
-						}
-						$("#deliveryWindow").window('open');
-					}
-				}, {
-					id: 'button-sign',
-					text: '签收录入',
-					iconCls: 'icon-save',
-					handler: function() {
-						// 判断是否选中一条记录
-						var row = $("#transitGrid").datagrid('getSelected');
-						if(row == null){
-							// 没有选中运输记录
-							$.messager.alert('警告','必须要先选中一条记录','warning');
-							return;
-						}
-						// 判断运输状态是否为“出入库”
-						if(row.status == '开始配送'){
-							// 在表单隐藏域保存当前操作中转信息id
-							$("#signId").val(row.id);
-							// 回显运输配送信息
-							$("#signTransitInfoView").text("");//清空数据
-							$("#signTransitInfoView").append("运单号："+ row.wayBill.wayBillNum + "</br>");
-							$("#signTransitInfoView").append("货物类型："+ row.wayBill.goodsType + "</br>");
-							$("#signTransitInfoView").append("发货地："+ row.wayBill.sendAddress + "</br>");
-							$("#signTransitInfoView").append("收货地："+ row.wayBill.recAddress + "</br>");
-							// transferInfo属性在实体中不存在，需要手动进行设置。
-							$("#signTransitInfoView").append("物流信息："+ row.transferInfo + "</br>");
-						}
-						else{
-							// 状态不为出入库中转，不必进行出入库操作
-							$.messager.alert('警告','进行签收录入操作，必须操作状态为开始配送的运单','warning');
-							return;
-						}
-						$("#signWindow").window('open');
-					}
-				}, {
-					id: 'button-transit',
-					text: '运输路径',
-					iconCls: 'icon-search',
-					handler: function() {
-						// 弹出窗口
-						$("#transitPathWindow").window('open');
-					}
-				}, {
-					id: 'button-path',
-					text: '实时配送路径',
-					iconCls: 'icon-search',
-					handler: function() {
-						$("#deliveryInTimePathWindow").window('open');
-					}
-				}];
+					},
+					{id: 'button-path', text: '实时配送路径', iconCls: 'icon-search',
+						handler: function() {
+							$("#deliveryInTimePathWindow").window('open');
+						} } ];
+                /*工具栏  End*/
 
-				var transitColumns = [
-					[{
-						field: 'id',
-						title: '编号',
-						width: 30
-					}, {
-						field: 'wayBillNum',
-						title: '运单号',
-						width: 100,
+				/*编写列描述 Start*/
+				var transitColumns = [ [
+				    {field: 'id',title: '编号',width: 30},
+					{field: 'wayBillNum', title: '运单号', width: 100,
 						formatter: function(data, row, index) {
 							if(row.wayBill != null) {
 								return row.wayBill.wayBillNum;
 							}
 						}
-					}, {
-						field: 'sendName',
-						title: '寄件人姓名',
-						width: 100,
+					},
+					{field: 'sendName', title: '寄件人姓名', width: 100,
 						formatter: function(data, row, index) {
 							if(row.wayBill != null){
 								return row.wayBill.sendName;
 							}
 						}
-
-					}, {
-						field: 'sendAddress',
-						title: '寄件地址',
-						width: 100,
+					},
+					{field: 'sendAddress', title: '寄件地址', width: 100,
 						formatter: function(data, row, index) {
 							if(row.wayBill != null){
 								return row.wayBill.sendAddress;
 							}
 						}
-					}, {
-						field: 'recName',
-						title: '收件人姓名',
-						width: 100,
-						formatter: function(data, row, index) {	
+					},
+					{field: 'recName', title: '收件人姓名', width: 100,
+						formatter: function(data, row, index) {
 							if(row.wayBill != null){
 								return row.wayBill.recName;
 							}
 						}
-					}, {
-						field: 'recAddress',
-						title: '收件地址',
-						width: 100,
+					},
+					{field: 'recAddress', title: '收件地址', width: 100,
 						formatter: function(data, row, index) {
 							if(row.wayBill != null){	
 								return row.wayBill.recAddress;
 							}
 						}
-					}, {
-						field: 'goodsType',
-						title: '托寄物',
-						width: 100,
+					},
+					{field: 'goodsType', title: '托寄物', width: 100,
 						formatter: function(data, row, index) {
 							if(row.wayBill != null){
 								return row.wayBill.goodsType;
 							}
 						} 
-					}, {
-						field: 'status',
-						title: '运输状态',
-						width: 100
-					}, {
-						field: 'outletAddress',
-						title: '网点地址',
-						width: 100
-					}, {
-						field: 'transferInfo',
-						title: '物流信息',
-						width: 100
-					}]
-				];
+					},
+					{field: 'status', title: '运输状态', width: 100},
+					{field: 'outletAddress', title: '网点地址', width: 100},
+					{field: 'transferInfo', title: '物流信息', width: 100}] ];
+                /*编写列描述 End*/
 
-				// 运输配送管理 表格定义 
+				/*运输配送管理 表格定义  绘制 DataGrid   Start */
 				$('#transitGrid').datagrid({
 					iconCls: 'icon-forward',
 					//url: '../../data/transit.json',
@@ -216,12 +181,14 @@
 					toolbar: transitToolbar,
 					columns: transitColumns
 				});
-				// 出入库保存按钮点击事件
+                /*运输配送管理 表格定义  绘制 DataGrid   End */
+
+                /*出入库保存按钮点击事件   Start */
 				$("#inoutStoreSave").click(function(){
 					if($("#inoutStoreForm").form('validate')){
 						$.ajax({
 							   type: "POST",
-							   url: "/inoutstore/save.html",
+							   url: "/inoutstore",
 							   data: $("#inoutStoreForm").serialize(),
 							   statusCode : {
 								   200 : function(){
@@ -235,14 +202,15 @@
 							   }
 							});
 					}
-				});	
-				
-				// 开始配送保存按钮点击事件
+				});
+                /*出入库保存按钮点击事件   End */
+
+                /*开始配送保存按钮点击事件   Start */
 				$("#deliverySave").click(function(){
 					if($("#deliveryForm").form('validate')){
 						$.ajax({
 							   type: "POST",
-							   url: "/delivery/save.html",
+							   url: "/delivery",
 							   data: $("#deliveryForm").serialize(),
 							   statusCode : {
 								   200 : function(){
@@ -256,15 +224,16 @@
 							   }
 							});
 					}
-				});	
-				
-				// 签收录入按钮点击事件
+				});
+                /*开始配送保存按钮点击事件   End */
+
+                /*签收录入按钮点击事件   Start */
 				$("#signSave").click(function(){
 					if($("#signForm").form('validate')){
 						var d = $("#signForm").serialize();
 						$.ajax({
 							   type: "POST",
-							   url: "/sign/save.html",
+							   url: "/sign",
 							   data: $("#signForm").serialize(),
 							   dataType: "json",
 							   statusCode : {
@@ -279,7 +248,8 @@
 							   }
 							});
 					}
-				});	
+				});
+                /*签收录入按钮点击事件   End */
 
 			});
 		</script>
