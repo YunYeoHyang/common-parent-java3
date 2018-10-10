@@ -1,9 +1,11 @@
 package com.czxy.bos.controller.system;
 
 import com.czxy.bos.domain.system.Menu;
+import com.czxy.bos.domain.system.User;
 import com.czxy.bos.service.system.MenuService;
 import com.czxy.bos.vo.EasyUIResult;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,5 +46,21 @@ public class MenuController {
     public ResponseEntity<List<Menu>> findAll(){
         List<Menu> list = menuService.findAll();
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    /**
+     * 动态菜单
+     * 加载左侧的菜单功能
+     * @return
+     */
+    @GetMapping(value = "/showMenu")
+    public ResponseEntity<List<Menu>>  showMenu(){
+        // 调用业务层，查询当前用户具有菜单列表
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+
+        // 查询菜单列表
+        List<Menu> result = menuService.findByUser(user);
+
+        return new ResponseEntity<List<Menu>>(result,HttpStatus.OK);
     }
 }

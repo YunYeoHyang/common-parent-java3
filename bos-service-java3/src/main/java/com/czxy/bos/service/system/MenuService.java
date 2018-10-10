@@ -2,6 +2,7 @@ package com.czxy.bos.service.system;
 
 import com.czxy.bos.dao.system.MenuMapper;
 import com.czxy.bos.domain.system.Menu;
+import com.czxy.bos.domain.system.User;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -49,5 +50,20 @@ public class MenuService {
 
     public List<Menu> findAll() {
         return menuMapper.selectAll();
+    }
+
+    /**
+     * 动态菜单
+     * @param user
+     * @return
+     */
+    public List<Menu> findByUser(User user) {
+        // 针对admin用户显示所有的菜单
+        if(user.getUsername().equals("admin")){
+            return menuMapper.selectAll();
+        } else {
+            // 使用用户ID，查询当前用户具有的菜单列表
+            return menuMapper.findByUser(user.getId());
+        }
     }
 }

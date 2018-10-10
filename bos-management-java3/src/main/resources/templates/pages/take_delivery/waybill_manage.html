@@ -65,7 +65,7 @@
 						}
 						var wayBillIds = array.join(",");
 						$.ajax({
-							url:"/transit/create.html",
+							url:"/transit",
 							type:'POST',
 							data:{wayBillIds: wayBillIds},
 							dataType:'json',

@@ -32,6 +32,6 @@
 		{ "id":"146", "pId":"14", "name":"出入库查询","page":"pages/transit/in_out_search.html"},
 		{ "id":"147", "pId":"14", "name":"库存查询","page":"pages/transit/remain_search.html"},
 		{ "id":"148", "pId":"14", "name":"合包查询","page":"pages/transit/package_search.html"},
-		{ "id":"149", "pId":"14", "name":"运输配送管理","page":"pages/transit/transitinfo.html"}
+		{ "id":"149", "pId":"14", "name":"运输配送管理","page":"pages/transit/transitinfo"}
 		
 ]
