@@ -26,7 +26,7 @@ public class ReportController {
 
     @GetMapping("/exportPdf")
     public void exportPdf(HttpServletResponse response) throws Exception {
-        String fileName = new String("运单数据".getBytes(), "iso-8859-1");
+        String fileName = "运单数据";
         response.setHeader("Content-Disposition", "attachment;filename=" + fileName + ".pdf");
 
         // 查询出 满足当前条件 结果数据
