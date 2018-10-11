@@ -5,10 +5,11 @@ import org.apache.ibatis.annotations.Select;
 import tk.mybatis.mapper.common.Mapper;
 
 @org.apache.ibatis.annotations.Mapper
-public interface AreaMapper extends Mapper<Area>{
+public interface AreaMapper extends Mapper<Area> {
 
     /**
      * 人工分单
+     *
      * @param area
      * @return
      */

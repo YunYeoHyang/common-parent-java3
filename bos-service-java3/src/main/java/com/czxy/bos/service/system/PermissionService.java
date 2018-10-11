@@ -23,11 +23,12 @@ public class PermissionService {
 
     /**
      * 查找指定用户授权的所有权限（如果是admin用户，将查询所有权限）
+     *
      * @param user
      * @return
      */
     public List<Permission> findByUser(User user) {
-        if(user.getUsername().equals("admin")){
+        if (user.getUsername().equals("admin")) {
             return permissionMapper.selectAll();
         }
         return permissionMapper.findByUser(user.getId());
@@ -35,14 +36,15 @@ public class PermissionService {
 
     /**
      * 查询所有
+     *
      * @param page
      * @param rows
      * @return
      */
-    public PageInfo<Permission> findAllPermissionList(Integer page , Integer rows) {
-        PageHelper.startPage( page ,rows);
+    public PageInfo<Permission> findAllPermissionList(Integer page, Integer rows) {
+        PageHelper.startPage(page, rows);
         List<Permission> list = permissionMapper.selectAll();
-        return new PageInfo<>( list );
+        return new PageInfo<>(list);
     }
 
     public List<Permission> findAll() {
@@ -55,7 +57,7 @@ public class PermissionService {
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("name", permission.getName());
         Permission temp = permissionMapper.selectOneByExample(example);
-        if(temp != null){
+        if (temp != null) {
             throw new BosException("权限名称已存在");
         }
         //校验【关键字】唯一
@@ -63,7 +65,7 @@ public class PermissionService {
         Example.Criteria criteria2 = example2.createCriteria();
         criteria2.andEqualTo("keyword", permission.getKeyword());
         temp = permissionMapper.selectOneByExample(example2);
-        if(temp != null){
+        if (temp != null) {
             throw new BosException("关键字已存在");
         }
 

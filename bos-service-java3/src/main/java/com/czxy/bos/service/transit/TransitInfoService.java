@@ -29,8 +29,8 @@ public class TransitInfoService {
     @Resource
     private WayBillRepository wayBillRepository;
 
-    public void createTransits(String wayBillIds){
-        if (StringUtils.isNotBlank(wayBillIds)){
+    public void createTransits(String wayBillIds) {
+        if (StringUtils.isNotBlank(wayBillIds)) {
             // 处理运单
             for (String wayBillId :
                     wayBillIds.split(",")) {
@@ -61,13 +61,14 @@ public class TransitInfoService {
 
     /**
      * 分页
+     *
      * @param pageNum
      * @param pageSize
      * @return
      */
     public PageInfo<TransitInfo> pageQuery(Integer pageNum, Integer pageSize) {
         // 使用分页助手开始分页,指定两个参数：当前页码，每页条数
-        PageHelper.startPage(pageNum , pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         // 然后分页拦截器会自动对接下来的查询进行分页
         List<TransitInfo> transitInfos = this.transitInfoMapper.select(null);// 不传查询条件
         for (TransitInfo transitInfo : transitInfos) {

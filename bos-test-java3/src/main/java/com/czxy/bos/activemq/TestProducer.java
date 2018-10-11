@@ -25,7 +25,8 @@ public class TestProducer {
         producer.send(textMessage);
 
         //6 释放资源
-        session.commit();;
+        session.commit();
+        ;
         session.close();
         connection.close();
         System.out.println("生产者已经生成完毕！");

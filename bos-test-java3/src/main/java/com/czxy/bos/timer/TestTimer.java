@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestTimer {
     //每3秒方法调用一次
-    @Scheduled(cron="0/3 * * * * ?")
-    public void demo(){
+    @Scheduled(cron = "0/3 * * * * ?")
+    public void demo() {
         System.out.println(System.currentTimeMillis());
     }
 

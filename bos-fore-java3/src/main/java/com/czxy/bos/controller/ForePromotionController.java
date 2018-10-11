@@ -17,13 +17,14 @@ public class ForePromotionController {
 
     /**
      * 查询所有
+     *
      * @return
      */
     @GetMapping
-    public ResponseEntity<String> queryPromotionByPage(){
+    public ResponseEntity<String> queryPromotionByPage() {
         //1 访问bos后端系统查询
         String url = "http://localhost:8080/promotion/findAll";
-        return restTemplate.getForEntity(url ,String.class);
+        return restTemplate.getForEntity(url, String.class);
     }
 
 

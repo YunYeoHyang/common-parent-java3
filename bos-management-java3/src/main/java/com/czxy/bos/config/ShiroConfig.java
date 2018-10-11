@@ -21,9 +21,9 @@ import com.czxy.bos.shiro.BosRealm;
 public class ShiroConfig {
 
     @Bean
-    public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager){
+    public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
         System.out.println("ShiroConfiguration.shirFilter()");
-        ShiroFilterFactoryBean shiroFilterFactoryBean  = new ShiroFilterFactoryBean();
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
@@ -36,7 +36,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized");
 
         //拦截器.
-        Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 
         //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/login", "anon");
@@ -61,22 +61,23 @@ public class ShiroConfig {
 
         return shiroFilterFactoryBean;
     }
+
     @Bean
-    public SecurityManager securityManager(Realm realm){
-        DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
+    public SecurityManager securityManager(Realm realm) {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(realm);
         return securityManager;
     }
 
     @Bean
-    public BosRealm realm(CredentialsMatcher credentialsMatcher){
+    public BosRealm realm(CredentialsMatcher credentialsMatcher) {
         BosRealm bosRealm = new BosRealm();
         bosRealm.setCredentialsMatcher(credentialsMatcher);
         return bosRealm;
     }
 
     @Bean
-    public CredentialsMatcher credentialsMatcher(){
+    public CredentialsMatcher credentialsMatcher() {
 //    return new HashedCredentialsMatcher("MD5");
         return new BosCredentialsMatcher();
     }
@@ -84,11 +85,12 @@ public class ShiroConfig {
     /**
      * 开启shiro aop注解支持
      * 使用代理方式;所以需要开启代码支持
+     *
      * @param securityManager
      * @return
      */
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
@@ -96,6 +98,7 @@ public class ShiroConfig {
 
     /**
      * 开启cglib代理
+     *
      * @return
      */
     @Bean

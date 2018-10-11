@@ -28,24 +28,27 @@ public class RoleService {
     @Resource
     private RolePermissionMapper rolePermissionMapper;
 
-    /**查询所有的角色*/
-    public PageInfo<Role> findAllRoleList(Integer page , Integer rows) {
-        PageHelper.startPage( page ,rows);
+    /**
+     * 查询所有的角色
+     */
+    public PageInfo<Role> findAllRoleList(Integer page, Integer rows) {
+        PageHelper.startPage(page, rows);
         List<Role> list = roleMapper.selectAll();
-        return new PageInfo<>( list );
+        return new PageInfo<>(list);
     }
 
     /**
      * 查找指定用户授权的所有角色 （如果是admin用户，将查询所有角色）
+     *
      * @param user
      * @return
      */
-    public List<Role> findByUser(User user ){
+    public List<Role> findByUser(User user) {
 
-        if ( user.getUsername().equals("admin") ){
+        if (user.getUsername().equals("admin")) {
             return roleMapper.selectAll();
         }
-        return roleMapper.findByUser( user.getId() );
+        return roleMapper.findByUser(user.getId());
     }
 
     /**
@@ -54,7 +57,7 @@ public class RoleService {
      * 2 建立role和menu的关系
      * 3 建立role和permission的关系
      */
-    public void saveRole(Role role , String menuIds , String[] permissionIds){
+    public void saveRole(Role role, String menuIds, String[] permissionIds) {
 
         // 1 保存 Role
         roleMapper.insert(role);
@@ -71,7 +74,7 @@ public class RoleService {
 
         // 3 建立 Role 和 Permission 的关系
         for (String id :
-                permissionIds){
+                permissionIds) {
             RolePermission rp = new RolePermission();
             rp.setRoleId(role.getId());
             rp.setPermissionId(Integer.parseInt(id));

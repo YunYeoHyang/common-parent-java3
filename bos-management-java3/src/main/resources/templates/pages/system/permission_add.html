@@ -2,68 +2,68 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<span th:replace="pages/common :: css('权限添加')"></span>
-	<span th:replace="pages/common :: js"></span>
-		<script type="text/javascript">
-			$(function(){
-				// 点击保存
-				$('#save').click(function(){
-					//location.href='permission.html';
-					//if($("#permissionForm").validate().form()){
-					$.ajax({
-						   type: "POST",
-						   url: "/permission",
-						   data: $("#permissionForm").serialize(),
-						   statusCode : {
-							   200 : function(){
-								   $.messager.alert('提示','新增权限成功!');
-								   location.href='permission.html';
-							   },
-							   500 : function( data ){
-								   $.messager.alert('提示','新增权限失败!' + data.responseText );
-							   }
-						   }
-					});
-				//}
+    <span th:replace="pages/common :: css('权限添加')"></span>
+    <span th:replace="pages/common :: js"></span>
+    <script type="text/javascript">
+        $(function () {
+            // 点击保存
+            $('#save').click(function () {
+                //location.href='permission.html';
+                //if($("#permissionForm").validate().form()){
+                $.ajax({
+                    type: "POST",
+                    url: "/permission",
+                    data: $("#permissionForm").serialize(),
+                    statusCode: {
+                        200: function () {
+                            $.messager.alert('提示', '新增权限成功!');
+                            location.href = 'permission.html';
+                        },
+                        500: function (data) {
+                            $.messager.alert('提示', '新增权限失败!' + data.responseText);
+                        }
+                    }
+                });
+                //}
 
-				});
-			});
-		</script>
-	</head>
+            });
+        });
+    </script>
+</head>
 
-	<body class="easyui-layout">
-		<div data-options="region:'north'">
-			<div class="datagrid-toolbar">
-				<a id="save" icon="icon-save" href="#" class="easyui-linkbutton" plain="true">保存</a>
-			</div>
-		</div>
-		<div data-options="region:'center'">
-			<form id="permissionForm" method="post">
-				<table class="table-edit" width="80%" align="center">
-					<tr class="title">
-						<td colspan="2">权限信息</td>
-					</tr>
-					<tr>
-						<td>名称</td>
-						<td>
-							<input type="text" name="name" class="easyui-validatebox" data-options="required:true" />
-						</td>
-					</tr>
-					<tr>
-						<td>关键字</td>
-						<td>
-							<input type="text" name="keyword" class="easyui-validatebox" data-options="required:true" /> 
-						</td>
-					</tr>
-					<tr>
-						<td>描述</td>
-						<td>
-							<textarea name="description" rows="4" cols="60"></textarea>
-						</td>
-					</tr>
-				</table>
-			</form>
-		</div>
-	</body>
+<body class="easyui-layout">
+<div data-options="region:'north'">
+    <div class="datagrid-toolbar">
+        <a id="save" icon="icon-save" href="#" class="easyui-linkbutton" plain="true">保存</a>
+    </div>
+</div>
+<div data-options="region:'center'">
+    <form id="permissionForm" method="post">
+        <table class="table-edit" width="80%" align="center">
+            <tr class="title">
+                <td colspan="2">权限信息</td>
+            </tr>
+            <tr>
+                <td>名称</td>
+                <td>
+                    <input type="text" name="name" class="easyui-validatebox" data-options="required:true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>关键字</td>
+                <td>
+                    <input type="text" name="keyword" class="easyui-validatebox" data-options="required:true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>描述</td>
+                <td>
+                    <textarea name="description" rows="4" cols="60"></textarea>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
 
 </html>

@@ -7,8 +7,8 @@
 
     <script type="text/javascript">
 
-        $(function(){
-            $("#bid").click(function(){
+        $(function () {
+            $("#bid").click(function () {
                 $("#win").window("open");
                 return false;   //阻止浏览器默认行为
             });
@@ -17,16 +17,15 @@
     </script>
 
 </head>
-<body >
+<body>
 
-    <input id="bid" type="button" value="点击打开"  />
+<input id="bid" type="button" value="点击打开"/>
 
 
-    <div id="win" class="easyui-window" title="我是标题" style="width:600px;height:400px"
-         data-options="iconCls:'icon-add',modal:true,minimizable:false,closed:true">
-        Window Content
-    </div>
-
+<div id="win" class="easyui-window" title="我是标题" style="width:600px;height:400px"
+     data-options="iconCls:'icon-add',modal:true,minimizable:false,closed:true">
+    Window Content
+</div>
 
 
 </body>

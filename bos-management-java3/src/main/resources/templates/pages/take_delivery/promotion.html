@@ -1,113 +1,114 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<!--引入公共内容-->
-	<span th:replace="/pages/common :: css('宣传任务')"></span>
-	<span th:replace="/pages/common :: js"></span>
+    <!--引入公共内容-->
+    <span th:replace="/pages/common :: css('宣传任务')"></span>
+    <span th:replace="/pages/common :: js"></span>
 
-		<script type="text/javascript">
-            //绘制datagrid
-            $(function(){
-                //1 准备数据
-                //1.1 列描述
-                var columnsArr = [ [
-                    {field:'id',checkbox:true},
-                    {field:'title',title:'宣传概要（标题）',width:100},
-                    {field:'titleImg',title:'宣传图片',width:200,
-						formatter:function(value,row,index){
-                    		if(value){
-                    			return "<img src='"+value+"' style='height:50px;width:50px' />";
-							}
-						}
-                    },
-                    {field:'startDate',title:'发布时间',width:100},
-                    {field:'endDate',title:'失效时间',width:100},
-
-                    {field:'updateTime',title:'更新时间',width:100},
-                    {field:'updateUnit',title:'更新单位',width:100},
-                    {field:'updateUser',title:'更新人',width:100},
-                    {field:'status',title:'状态',width:100},
-
-
-                ] ];
-                //1.2 请求路径
-                var url = "/promotion";
-                //1.3 工具条
-				var toolbar = [
-                    {
-                        id : 'button-search',
-                        text : '查询',
-                        iconCls : 'icon-search',
-                        handler : function(){
-                            alert("查询");
-                        }
-                    },
-                    {
-                        id : 'button-add',
-                        text : '增加',
-                        iconCls : 'icon-add',
-                        handler : function(){
-                           location.href = "/pages/take_delivery/promotion_add";
-                        }
-                    },
-                    {
-                        id : 'button-edit',
-                        text : '修改',
-                        iconCls : 'icon-edit',
-                        handler : function(){
-                            alert("修改");
-                        }
-                    },
-                    {
-                        id : 'button-cancel',
-                        text : '作废',
-                        iconCls : 'icon-cancel',
-                        handler : function(){
-                            alert("作废");
-                        }
-                    },
-                    {
-                        id : 'button-save',
-                        text : '保存',
-                        iconCls : 'icon-save',
-                        handler : function(){
-                            alert("保存");
-                        }
-                    },
-                    {
-                        id : 'button-no',
-                        text : '取消',
-                        iconCls : 'icon-no',
-                        handler : function(){
-                            alert("取消");
+    <script type="text/javascript">
+        //绘制datagrid
+        $(function () {
+            //1 准备数据
+            //1.1 列描述
+            var columnsArr = [[
+                {field: 'id', checkbox: true},
+                {field: 'title', title: '宣传概要（标题）', width: 100},
+                {
+                    field: 'titleImg', title: '宣传图片', width: 200,
+                    formatter: function (value, row, index) {
+                        if (value) {
+                            return "<img src='" + value + "' style='height:50px;width:50px' />";
                         }
                     }
-				];
+                },
+                {field: 'startDate', title: '发布时间', width: 100},
+                {field: 'endDate', title: '失效时间', width: 100},
 
-                //2 参数
-                var options = {
-                    "columns" :  columnsArr ,		//列描述
-                    "toolbar" : toolbar ,			//工具条
-                    "method" : "get",				//请求方式，查询必须是get
-                    "url" : url ,					//请求路径
-                    "pagination" :  true,			//分页
-                    "rownumbers" : true ,			//行号
-                    "pageSize" : 2 ,				//每页显示个数
-                    "pageList" : [2,5,10,20] ,		//显示列表
-                    "striped" : true ,				//隔行换色
-					//"height" : 100,				//高度
-					"fit" : true					//100%填充
-                };
-                //3 绘制
-                $("#grid").datagrid( options  );
-            });
-		</script>
-	</head>
+                {field: 'updateTime', title: '更新时间', width: 100},
+                {field: 'updateUnit', title: '更新单位', width: 100},
+                {field: 'updateUser', title: '更新人', width: 100},
+                {field: 'status', title: '状态', width: 100},
 
-	<body class="easyui-layout">
-		<div region="center" style="overflow:auto;padding:5px;">
-			<table id="grid"></table>
-		</div>
-	</body>
+
+            ]];
+            //1.2 请求路径
+            var url = "/promotion";
+            //1.3 工具条
+            var toolbar = [
+                {
+                    id: 'button-search',
+                    text: '查询',
+                    iconCls: 'icon-search',
+                    handler: function () {
+                        alert("查询");
+                    }
+                },
+                {
+                    id: 'button-add',
+                    text: '增加',
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        location.href = "/pages/take_delivery/promotion_add";
+                    }
+                },
+                {
+                    id: 'button-edit',
+                    text: '修改',
+                    iconCls: 'icon-edit',
+                    handler: function () {
+                        alert("修改");
+                    }
+                },
+                {
+                    id: 'button-cancel',
+                    text: '作废',
+                    iconCls: 'icon-cancel',
+                    handler: function () {
+                        alert("作废");
+                    }
+                },
+                {
+                    id: 'button-save',
+                    text: '保存',
+                    iconCls: 'icon-save',
+                    handler: function () {
+                        alert("保存");
+                    }
+                },
+                {
+                    id: 'button-no',
+                    text: '取消',
+                    iconCls: 'icon-no',
+                    handler: function () {
+                        alert("取消");
+                    }
+                }
+            ];
+
+            //2 参数
+            var options = {
+                "columns": columnsArr,		//列描述
+                "toolbar": toolbar,			//工具条
+                "method": "get",				//请求方式，查询必须是get
+                "url": url,					//请求路径
+                "pagination": true,			//分页
+                "rownumbers": true,			//行号
+                "pageSize": 2,				//每页显示个数
+                "pageList": [2, 5, 10, 20],		//显示列表
+                "striped": true,				//隔行换色
+                //"height" : 100,				//高度
+                "fit": true					//100%填充
+            };
+            //3 绘制
+            $("#grid").datagrid(options);
+        });
+    </script>
+</head>
+
+<body class="easyui-layout">
+<div region="center" style="overflow:auto;padding:5px;">
+    <table id="grid"></table>
+</div>
+</body>
 
 </html>

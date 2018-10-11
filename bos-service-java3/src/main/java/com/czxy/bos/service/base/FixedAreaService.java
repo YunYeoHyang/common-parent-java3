@@ -33,26 +33,26 @@ public class FixedAreaService {
     @Resource
     private FixedAreaCourierMapper fixedAreaCourierMapper;
 
-    public Integer saveFixedArea(FixedArea fixedArea ){
+    public Integer saveFixedArea(FixedArea fixedArea) {
         //1 校验
         // 1.1 名称必须唯一
         Example nameExample = new Example(FixedArea.class);
         Example.Criteria nameCriteria = nameExample.createCriteria();
-        nameCriteria.andEqualTo("fixedAreaName" ,fixedArea.getFixedAreaName());
+        nameCriteria.andEqualTo("fixedAreaName", fixedArea.getFixedAreaName());
         FixedArea nameFixedArea = fixedAreaMapper.selectOneByExample(nameExample);
-        if(nameFixedArea != null){
+        if (nameFixedArea != null) {
             throw new BosException("定区名称已存在！");
         }
         // 1.2 负责人必须唯一
         Example leaderExample = new Example(FixedArea.class);
         Example.Criteria leaderCriteria = leaderExample.createCriteria();
-        leaderCriteria.andEqualTo("fixedAreaLeader" ,fixedArea.getFixedAreaLeader() );
+        leaderCriteria.andEqualTo("fixedAreaLeader", fixedArea.getFixedAreaLeader());
         FixedArea leaderFixedArea = fixedAreaMapper.selectOneByExample(leaderExample);
-        if(leaderFixedArea != null){
+        if (leaderFixedArea != null) {
             throw new BosException("定区的负责人已存在！");
         }
         // 1.3 数据完整性
-        fixedArea.setId( UUID.randomUUID().toString() );
+        fixedArea.setId(UUID.randomUUID().toString());
 
         //2 添加
         return fixedAreaMapper.insert(fixedArea);
@@ -60,26 +60,28 @@ public class FixedAreaService {
 
     /**
      * 分页查询所有
+     *
      * @param fixedArea 条件，需自己完善!!!
      * @param page
      * @param rows
      * @return
      */
-    public PageInfo<FixedArea> findAllByPage(FixedArea fixedArea , Integer page , Integer rows){
+    public PageInfo<FixedArea> findAllByPage(FixedArea fixedArea, Integer page, Integer rows) {
         //TODO 0 条件
         //1 分页
-        PageHelper.startPage( page ,rows );
+        PageHelper.startPage(page, rows);
         //2 查询
-        List<FixedArea> list = fixedAreaMapper.selectByExample( null );
+        List<FixedArea> list = fixedAreaMapper.selectByExample(null);
         //3 封装
-        return new PageInfo<>( list );
+        return new PageInfo<>(list);
     }
 
     /**
      * 定区关联快递员
+     *
      * @param fixedAreaId 定区id
-     * @param courierId 快递员id
-     * @param takeTimeId 收派时间id
+     * @param courierId   快递员id
+     * @param takeTimeId  收派时间id
      */
     public void associationCourierToFixedArea(String fixedAreaId, Integer courierId, Integer takeTimeId) {
         //1 更新快递员的收派时间

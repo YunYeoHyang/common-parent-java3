@@ -16,19 +16,20 @@ public class BookService {
     @Resource
     private BookRepository bookRepository;
 
-    public void save(Book book){
+    public void save(Book book) {
         this.bookRepository.save(book);
     }
 
-    public Page<Book> findAll(Pageable pageable){
+    public Page<Book> findAll(Pageable pageable) {
         return this.bookRepository.findAll(pageable);
     }
 
-    public Page<Book> search(String title,Pageable pageable){
-        return this.bookRepository.findByTitleLike(title,pageable);
+    public Page<Book> search(String title, Pageable pageable) {
+        return this.bookRepository.findByTitleLike(title, pageable);
     }
-    public Page<Book> search(String title,String content,Pageable pageable){
-        return this.bookRepository.findByTitleLikeAndContentLike(title,content,pageable);
+
+    public Page<Book> search(String title, String content, Pageable pageable) {
+        return this.bookRepository.findByTitleLikeAndContentLike(title, content, pageable);
     }
 
 }

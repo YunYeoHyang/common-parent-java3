@@ -22,19 +22,20 @@ public class AreaService {
 
     /**
      * 对上传数据进行校验，如果存在忽略，只记录成功个数。
+     *
      * @param list
      * @return
      */
-    public Integer saveAreas(List<Area> list){
+    public Integer saveAreas(List<Area> list) {
         int count = 0;
-        for(Area area : list){
+        for (Area area : list) {
             //TODO 没有校验是否重复，如果重复忽略，方法返回值整数（本次添加个数）
-            Area temp = areaMapper.selectByPrimaryKey( area.getId());
+            Area temp = areaMapper.selectByPrimaryKey(area.getId());
 
-            if(temp != null){
+            if (temp != null) {
                 continue;
             }
-            count ++;
+            count++;
             areaMapper.insert(area);
         }
         return count;
@@ -42,59 +43,63 @@ public class AreaService {
 
     /**
      * 带条件的分页查询
+     *
      * @param area 条件
      * @param page 第几页
      * @param rows 每页显示个数
      * @return
      */
-    public PageInfo<Area> findAll(Area area , Integer page , Integer rows){
+    public PageInfo<Area> findAll(Area area, Integer page, Integer rows) {
         //1 拼凑条件
         Example example = new Example(Area.class);
         Example.Criteria criteria = example.createCriteria();
-        if( area != null ){
+        if (area != null) {
             //省
-            if(StringUtils.isNotBlank(area.getProvince() )){
-                criteria.andLike("province" , "%"+area.getProvince()+"%");
+            if (StringUtils.isNotBlank(area.getProvince())) {
+                criteria.andLike("province", "%" + area.getProvince() + "%");
 
             }
             //TODO 市 、县
         }
         //2 分页设置
-        PageHelper.startPage( page ,rows);
+        PageHelper.startPage(page, rows);
         //3 查询所有(带条件)
-        List<Area> list = areaMapper.selectByExample( example );
+        List<Area> list = areaMapper.selectByExample(example);
         //4 封装
-        return new PageInfo<>( list );
+        return new PageInfo<>(list);
     }
 
     /**
      * 添加功能
+     *
      * @param area
      * @return
      */
     public Integer save(Area area) {
         area.setId(UUID.randomUUID().toString());
-        return areaMapper.insert( area );
+        return areaMapper.insert(area);
     }
 
     /**
      * 更新功能
+     *
      * @param area
      * @return
      */
     public Integer update(Area area) {
-        return this.areaMapper.updateByPrimaryKey( area );
+        return this.areaMapper.updateByPrimaryKey(area);
     }
 
     /**
      * 删除功能
+     *
      * @param ids
      * @return
      */
     public Integer deleteArea(String[] ids) {
 
         int count = 0;
-        for ( String idstr : ids){
+        for (String idstr : ids) {
             areaMapper.deleteByPrimaryKey(idstr);
             count++;
         }
@@ -104,10 +109,11 @@ public class AreaService {
     /**
      * 人工分单
      * 通过省市县查询地区
+     *
      * @param area
      * @return
      */
-    public Area selectByArea(Area area){
+    public Area selectByArea(Area area) {
         return areaMapper.selectByArea(area);
     }
 }

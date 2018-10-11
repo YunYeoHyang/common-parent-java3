@@ -20,51 +20,54 @@ public class CrmCustomerService {
 
     /**
      * 查询没有关联定区的客户 （客户表中，定区外键为null）
+     *
      * @return
      */
-    public List<Customer> findNoAssociationCustomers(){
+    public List<Customer> findNoAssociationCustomers() {
         //拼凑条件，fixedAreaId需要为null
         Example example = new Example(Customer.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andIsNull("fixedAreaId");
 
         //查询所有
-        return crmCustomerMapper.selectByExample( example );
+        return crmCustomerMapper.selectByExample(example);
 
     }
 
     /**
      * 查询定区已经关联的客户 （客户表中，定区外键=xxx）
+     *
      * @param fixedAreaId
      * @return
      */
-    public List<Customer> findHasAssociationFixedAreaCustomers(String fixedAreaId){
+    public List<Customer> findHasAssociationFixedAreaCustomers(String fixedAreaId) {
         //拼凑条件 fixedAreaId = ?
-        Example example = new Example( Customer.class );
+        Example example = new Example(Customer.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("fixedAreaId",fixedAreaId);
+        criteria.andEqualTo("fixedAreaId", fixedAreaId);
 
         //查询所有
-        return crmCustomerMapper.selectByExample( example );
+        return crmCustomerMapper.selectByExample(example);
     }
 
 
     /**
      * 将指定的定区关联到多个客户中
+     *
      * @param fixedAreaId
      * @param customerIds
      */
-    public void associationCustomersToFixedArea(String fixedAreaId , String customerIds){
+    public void associationCustomersToFixedArea(String fixedAreaId, String customerIds) {
         //1 获得指定定区关联的所有客户，并将外键更新成null
         List<Customer> list = findHasAssociationFixedAreaCustomers(fixedAreaId);
-        for(Customer customer : list ){
+        for (Customer customer : list) {
             customer.setFixedAreaId(null);
-            crmCustomerMapper.updateByPrimaryKey( customer );
+            crmCustomerMapper.updateByPrimaryKey(customer);
         }
 
         //2 将一组客户id拆分数组，遍历依次关联（通过客户id查询客户，将关联定区外键设置成当前的定区）
         String[] ids = customerIds.split(",");
-        for(String idStr : ids ){
+        for (String idStr : ids) {
             Integer id = Integer.parseInt(idStr);
             // 通过id查询
             Customer customer = crmCustomerMapper.selectByPrimaryKey(id);
@@ -80,15 +83,15 @@ public class CrmCustomerService {
     public void saveCustomer(Customer customer) {
         //1 校验
         // 1.1 非空校验
-        if(StringUtils.isBlank(customer.getTelephone())){
+        if (StringUtils.isBlank(customer.getTelephone())) {
             throw new BosException("手机不能为空！");
         }
         // 1.2 手机号不能重复
         Example example = new Example(Customer.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("telephone",customer.getTelephone());
+        criteria.andEqualTo("telephone", customer.getTelephone());
         Customer findCustomer = crmCustomerMapper.selectOneByExample(example);
-        if(findCustomer != null){
+        if (findCustomer != null) {
             throw new BosException("手机已被占用！");
         }
 
@@ -99,25 +102,27 @@ public class CrmCustomerService {
 
     /**
      * 通过手机号查询客户
+     *
      * @param telephone
      * @return
      */
-    public Customer findByTelephone(String telephone){
+    public Customer findByTelephone(String telephone) {
         Example example = new Example(Customer.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("telephone",telephone);
+        criteria.andEqualTo("telephone", telephone);
 
         return crmCustomerMapper.selectOneByExample(example);
     }
 
     /**
      * 激活操作 (根据电话号码修改用户的激活状态)
+     *
      * @param telephone
      */
-    public void updateType(String telephone){
+    public void updateType(String telephone) {
         //1 查询
         Customer customer = findByTelephone(telephone);
-        if(customer == null){
+        if (customer == null) {
             throw new BosException("操作对象不存在");
         }
         //2 在更新
@@ -127,21 +132,23 @@ public class CrmCustomerService {
 
     /**
      * 通过手机号和密码查看客户
+     *
      * @param telephone
      * @param password
      * @return
      */
-    public Customer findCustomerTelephoneAndPassword(String telephone , String password){
+    public Customer findCustomerTelephoneAndPassword(String telephone, String password) {
         Example example = new Example(Customer.class);
         example.createCriteria()
-                .andEqualTo("telephone",telephone)
-                .andEqualTo("password",password);
+                .andEqualTo("telephone", telephone)
+                .andEqualTo("password", password);
 
-        return this.crmCustomerMapper.selectOneByExample( example );
+        return this.crmCustomerMapper.selectOneByExample(example);
     }
 
     /**
      * 通过地址和客户id查询定区id
+     *
      * @param address
      * @param customerId
      * @return
@@ -155,7 +162,7 @@ public class CrmCustomerService {
                 .andEqualTo("address", address)
                 .andEqualTo("id", customerId);
         Customer customer = crmCustomerMapper.selectOneByExample(example);
-        if(customer != null){
+        if (customer != null) {
             return customer.getFixedAreaId();
         }
         return null;

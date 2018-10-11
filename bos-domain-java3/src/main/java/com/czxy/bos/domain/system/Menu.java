@@ -17,97 +17,97 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "T_MENU")
 public class Menu {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
-	private int id;
-	@Column(name = "NAME")
-	private String name; // 菜单名称
-	@Column(name = "PAGE")
-	private String page; // 访问路径
-	@Column(name = "PRIORITY")
-	private Integer priority; // 优先级
-	@Column(name = "DESCRIPTION")
-	private String description; // 描述
-	@Transient
-	private Set<Role> roles = new HashSet<Role>(0);
-	@Transient
-	private Set<Menu> childrenMenus = new HashSet<Menu>();
-	@Transient
-	private Menu parentMenu;
-	@Column(name = "PID")
-	private Integer pid;
-	
-	public int getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private int id;
+    @Column(name = "NAME")
+    private String name; // 菜单名称
+    @Column(name = "PAGE")
+    private String page; // 访问路径
+    @Column(name = "PRIORITY")
+    private Integer priority; // 优先级
+    @Column(name = "DESCRIPTION")
+    private String description; // 描述
+    @Transient
+    private Set<Role> roles = new HashSet<Role>(0);
+    @Transient
+    private Set<Menu> childrenMenus = new HashSet<Menu>();
+    @Transient
+    private Menu parentMenu;
+    @Column(name = "PID")
+    private Integer pid;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getPage() {
-		return page;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setPage(String page) {
-		this.page = page;
-	}
+    public String getPage() {
+        return page;
+    }
 
-	public Integer getPriority() {
-		return priority;
-	}
+    public void setPage(String page) {
+        this.page = page;
+    }
 
-	public void setPriority(Integer priority) {
-		this.priority = priority;
-	}
+    public Integer getPriority() {
+        return priority;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public Set<Role> getRoles() {
-		return roles;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
+    public Set<Role> getRoles() {
+        return roles;
+    }
 
-	public Set<Menu> getChildrenMenus() {
-		return childrenMenus;
-	}
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
-	public void setChildrenMenus(Set<Menu> childrenMenus) {
-		this.childrenMenus = childrenMenus;
-	}
+    public Set<Menu> getChildrenMenus() {
+        return childrenMenus;
+    }
 
-	public Menu getParentMenu() {
-		return parentMenu;
-	}
+    public void setChildrenMenus(Set<Menu> childrenMenus) {
+        this.childrenMenus = childrenMenus;
+    }
 
-	public void setParentMenu(Menu parentMenu) {
-		this.parentMenu = parentMenu;
-	}
+    public Menu getParentMenu() {
+        return parentMenu;
+    }
 
-	public Integer getPid() {
-		return pid;
-	}
+    public void setParentMenu(Menu parentMenu) {
+        this.parentMenu = parentMenu;
+    }
 
-	public void setPid(Integer pid) {
-		this.pid = pid;
-	}
+    public Integer getPid() {
+        return pid;
+    }
+
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
 
 }

@@ -15,8 +15,8 @@ public class PromotionTask {
     @Resource
     private PromotionService promotionService;
 
-    @Scheduled(cron="0 0/1 * * * ?")
-    public void process(){
+    @Scheduled(cron = "0 0/1 * * * ?")
+    public void process() {
         promotionService.updateWithEndDate();
     }
 

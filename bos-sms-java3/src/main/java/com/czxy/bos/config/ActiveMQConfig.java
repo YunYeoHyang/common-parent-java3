@@ -14,7 +14,7 @@ public class ActiveMQConfig {
 
 
     @Bean
-    public Queue queue(){
+    public Queue queue() {
         return new ActiveMQQueue("czxy.queue");
     }
 

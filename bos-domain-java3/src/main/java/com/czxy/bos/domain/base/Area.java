@@ -17,93 +17,93 @@ import javax.persistence.Transient;
 @Table(name = "T_AREA")
 public class Area {
 
-	@Id
-	@Column(name = "ID")
-	private String id; // 区域编号
-	@Column(name = "PROVINCE")
-	private String province; // 省
-	@Column(name = "CITY")
-	private String city; // 城市
-	@Column(name = "DISTRICT")
-	private String district; // 区域
-	@Column(name = "POSTCODE")
-	private String postcode; // 邮编
-	@Column(name = "CITYCODE")
-	private String citycode; // 城市编码
-	@Column(name = "SHORTCODE")
-	private String shortcode; // 简码
-	@Transient
-	private Set<SubArea> subareas = new HashSet<SubArea>();
-	
-	public String getId() {
-		return id;
-	}
+    @Id
+    @Column(name = "ID")
+    private String id; // 区域编号
+    @Column(name = "PROVINCE")
+    private String province; // 省
+    @Column(name = "CITY")
+    private String city; // 城市
+    @Column(name = "DISTRICT")
+    private String district; // 区域
+    @Column(name = "POSTCODE")
+    private String postcode; // 邮编
+    @Column(name = "CITYCODE")
+    private String citycode; // 城市编码
+    @Column(name = "SHORTCODE")
+    private String shortcode; // 简码
+    @Transient
+    private Set<SubArea> subareas = new HashSet<SubArea>();
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getProvince() {
-		return province;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setProvince(String province) {
-		this.province = province;
-	}
+    public String getProvince() {
+        return province;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public void setProvince(String province) {
+        this.province = province;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public String getDistrict() {
-		return district;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public void setDistrict(String district) {
-		this.district = district;
-	}
+    public String getDistrict() {
+        return district;
+    }
 
-	public String getPostcode() {
-		return postcode;
-	}
+    public void setDistrict(String district) {
+        this.district = district;
+    }
 
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
-	}
+    public String getPostcode() {
+        return postcode;
+    }
 
-	public String getCitycode() {
-		return citycode;
-	}
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
 
-	public void setCitycode(String citycode) {
-		this.citycode = citycode;
-	}
+    public String getCitycode() {
+        return citycode;
+    }
 
-	public String getShortcode() {
-		return shortcode;
-	}
+    public void setCitycode(String citycode) {
+        this.citycode = citycode;
+    }
 
-	public void setShortcode(String shortcode) {
-		this.shortcode = shortcode;
-	}
+    public String getShortcode() {
+        return shortcode;
+    }
 
-	public Set<SubArea> getSubareas() {
-		return subareas;
-	}
+    public void setShortcode(String shortcode) {
+        this.shortcode = shortcode;
+    }
 
-	public void setSubareas(Set<SubArea> subareas) {
-		this.subareas = subareas;
-	}
+    public Set<SubArea> getSubareas() {
+        return subareas;
+    }
 
-	@Override
-	public String toString() {
-		return "Area [id=" + id + ", province=" + province + ", city=" + city
-				+ ", district=" + district + ", postcode=" + postcode
-				+ ", citycode=" + citycode + ", shortcode=" + shortcode + "]";
-	}
+    public void setSubareas(Set<SubArea> subareas) {
+        this.subareas = subareas;
+    }
+
+    @Override
+    public String toString() {
+        return "Area [id=" + id + ", province=" + province + ", city=" + city
+                + ", district=" + district + ", postcode=" + postcode
+                + ", citycode=" + citycode + ", shortcode=" + shortcode + "]";
+    }
 
 }

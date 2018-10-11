@@ -55,7 +55,7 @@ public class TestPool {
         }
 
         //2 发送get请求
-        ResponseEntity<String> responseEntity = template.getForEntity("http://localhost:8090/customer/associationFixedAreaCustomers?fixedAreaId=dq001",String.class);
+        ResponseEntity<String> responseEntity = template.getForEntity("http://localhost:8090/customer/associationFixedAreaCustomers?fixedAreaId=dq001", String.class);
         //template.postForEntity()
         //template.put("",null);
         //template.delete();

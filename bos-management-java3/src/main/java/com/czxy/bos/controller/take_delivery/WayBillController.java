@@ -80,5 +80,4 @@ public class WayBillController {
         EasyUIResult<EsWayBill> result = new EasyUIResult<>(pageBean.getTotalElements() ,pageBean.getContent());
         return new ResponseEntity<>(result , HttpStatus.OK);
     }
-
 }

@@ -24,13 +24,14 @@ public class PromotionService {
 
     /**
      * 查询所有，含分页
+     *
      * @param page
      * @param rows
      * @return
      */
-    public PageInfo<Promotion> queryPromotionListByPage(Integer page , Integer rows){
+    public PageInfo<Promotion> queryPromotionListByPage(Integer page, Integer rows) {
         //1 分页
-        PageHelper.startPage(page ,rows );
+        PageHelper.startPage(page, rows);
         //2 查询
         List<Promotion> list = this.promotionMapper.selectAll();
         //3 封装
@@ -39,24 +40,24 @@ public class PromotionService {
 
     /**
      * 查询所有，不含分页
+     *
      * @return
      */
-    public List<Promotion> findAll(){
+    public List<Promotion> findAll() {
         Example example = new Example(Promotion.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("status","1");
+        criteria.andEqualTo("status", "1");
 
         //查询
-        return this.promotionMapper.selectByExample( example );
+        return this.promotionMapper.selectByExample(example);
     }
 
     /**
      * 更新过期时间
      */
-    public void updateWithEndDate(){
+    public void updateWithEndDate() {
         this.promotionMapper.updateWithEndDate();
     }
-
 
 
 }

@@ -8,6 +8,7 @@ import com.czxy.bos.domain.transit.SignInfo;
 import com.czxy.bos.domain.transit.TransitInfo;
 import com.czxy.bos.es.domain.EsWayBill;
 import com.czxy.bos.es.repository.WayBillRepository;
+import com.czxy.bos.exception.BosException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,37 +32,44 @@ public class SignInfoService {
     private WayBillMapper wayBillMapper;
 
     public void save(String transitInfoId, SignInfo signInfo) {
-        // 保存签收录入信息
-        signInfoMapper.insert(signInfo);
-        // 关联运输流程
-        TransitInfo transitInfo = transitInfoMapper.selectByPrimaryKey(Integer.parseInt(transitInfoId));
-        transitInfo.setSignInfo(signInfo);
-        transitInfo.setSignInfoId(signInfo.getId());
 
-        WayBill wayBill = wayBillMapper.selectByPrimaryKey(transitInfo.getWayBillId());
+        //1 查询运输信息
+        TransitInfo transitInfo = this.transitInfoMapper.selectByPrimaryKey( transitInfoId );
 
-        // 更改状态
-        if (signInfo.getSignType().equals("正常")) {
-            // 正常签收
-            transitInfo.setStatus("正常签收");
-            // 更改运单状态（3：表示已签收）
-            wayBill.setSignStatus(3);
-
-        } else {
-            // 异常
-            transitInfo.setStatus("异常");
-            // 更改运单状态（4：表示异常）
-            wayBill.setSignStatus(4);
+        //2 校验
+        // 非空
+        if(transitInfo == null){
+            throw new BosException("对象不存在");
+        }
+        // 不是“开始配送”
+        if(!"开始配送".equals(transitInfo.getStatus())){
+            throw new BosException("状态不正确");
         }
 
+        //3 保存签收信息 （注意：id注解修饰，必须JDBC）
+        this.signInfoMapper.insert( signInfo );
+
+
+        WayBill wayBill = wayBillMapper.selectByPrimaryKey( transitInfo.getWayBillId() );
+
+        if("正常".equals(signInfo.getSignType())){
+            transitInfo.setStatus("正常签收");
+            wayBill.setSignStatus(3);   //已签收
+        } else {
+            transitInfo.setStatus("异常");
+            wayBill.setSignStatus(4);   //异常
+        }
+        //4 更新运输信息状态、关联签收对象
+        transitInfo.setSignInfoId( signInfo.getId() );
         transitInfoMapper.updateByPrimaryKey(transitInfo);
-        //更新waybill
+
+        //5 更新运单
         wayBillMapper.updateByPrimaryKey(wayBill);
 
-        // 更改索引库（只要运单WayBill的数据发生改变，都需要更新索引库）
+        //6 同步es
         EsWayBill esWayBill = new EsWayBill();
-        BeanUtils.copyProperties(wayBill, esWayBill);
-        wayBillRepository.save(esWayBill);
+        BeanUtils.copyProperties(wayBill , esWayBill );
 
+        this.wayBillRepository.save( esWayBill );
     }
 }

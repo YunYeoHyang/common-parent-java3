@@ -18,128 +18,128 @@ import com.czxy.bos.domain.base.Courier;
 @Entity
 @Table(name = "T_WORK_BILL")
 public class WorkBill {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
-	private Integer id; // 主键
-	@Column(name = "TYPE")
-	private String type; // 工单类型 新,追,销
-	/*
-	 * 新单:没有确认货物状态的 
-	   已通知:自动下单下发短信 
-	   已确认:接到短信,回复收信确认信息 
-	   已取件:已经取件成功,发回确认信息 生成工作单
-	 * 已取消:销单
-	 * 
-	 */
-	@Column(name = "PICKSTATE")
-	private String pickstate; // 取件状态
-	@Column(name = "BUILDTIME")
-	private Date buildtime; // 工单生成时间
-	@Column(name = "ATTACHBILLTIMES")
-	private Integer attachbilltimes; // 追单次数
-	@Column(name = "REMARK")
-	private String remark; // 订单备注
-	@Column(name = "SMSNUMBER")
-	private String smsNumber; // 短信序号
-	
-	@Column(name = "COURIER")
-	private Integer courierId;
-	@Transient
-	private Courier courier;// 快递员
-	
-	
-	@Column(name = "ORDER_ID")
-	private Integer orderId;
-	@Transient
-	private Order order; // 订单
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Integer id; // 主键
+    @Column(name = "TYPE")
+    private String type; // 工单类型 新,追,销
+    /*
+     * 新单:没有确认货物状态的
+       已通知:自动下单下发短信
+       已确认:接到短信,回复收信确认信息
+       已取件:已经取件成功,发回确认信息 生成工作单
+     * 已取消:销单
+     *
+     */
+    @Column(name = "PICKSTATE")
+    private String pickstate; // 取件状态
+    @Column(name = "BUILDTIME")
+    private Date buildtime; // 工单生成时间
+    @Column(name = "ATTACHBILLTIMES")
+    private Integer attachbilltimes; // 追单次数
+    @Column(name = "REMARK")
+    private String remark; // 订单备注
+    @Column(name = "SMSNUMBER")
+    private String smsNumber; // 短信序号
 
-	public void setCourierId(Integer courierId) {
-		this.courierId = courierId;
-	}
+    @Column(name = "COURIER")
+    private Integer courierId;
+    @Transient
+    private Courier courier;// 快递员
 
-	public Integer getCourierId() {
-		return courierId;
-	}
 
-	public void setOrderId(Integer orderId) {
-		this.orderId = orderId;
-	}
+    @Column(name = "ORDER_ID")
+    private Integer orderId;
+    @Transient
+    private Order order; // 订单
 
-	public Integer getOrderId() {
-		return orderId;
-	}
+    public void setCourierId(Integer courierId) {
+        this.courierId = courierId;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getCourierId() {
+        return courierId;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public Integer getOrderId() {
+        return orderId;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getPickstate() {
-		return pickstate;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setPickstate(String pickstate) {
-		this.pickstate = pickstate;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public Date getBuildtime() {
-		return buildtime;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public void setBuildtime(Date buildtime) {
-		this.buildtime = buildtime;
-	}
+    public String getPickstate() {
+        return pickstate;
+    }
 
-	public Integer getAttachbilltimes() {
-		return attachbilltimes;
-	}
+    public void setPickstate(String pickstate) {
+        this.pickstate = pickstate;
+    }
 
-	public void setAttachbilltimes(Integer attachbilltimes) {
-		this.attachbilltimes = attachbilltimes;
-	}
+    public Date getBuildtime() {
+        return buildtime;
+    }
 
-	public String getRemark() {
-		return remark;
-	}
+    public void setBuildtime(Date buildtime) {
+        this.buildtime = buildtime;
+    }
 
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
+    public Integer getAttachbilltimes() {
+        return attachbilltimes;
+    }
 
-	public String getSmsNumber() {
-		return smsNumber;
-	}
+    public void setAttachbilltimes(Integer attachbilltimes) {
+        this.attachbilltimes = attachbilltimes;
+    }
 
-	public void setSmsNumber(String smsNumber) {
-		this.smsNumber = smsNumber;
-	}
+    public String getRemark() {
+        return remark;
+    }
 
-	public Courier getCourier() {
-		return courier;
-	}
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
-	public void setCourier(Courier courier) {
-		this.courier = courier;
-	}
+    public String getSmsNumber() {
+        return smsNumber;
+    }
 
-	public Order getOrder() {
-		return order;
-	}
+    public void setSmsNumber(String smsNumber) {
+        this.smsNumber = smsNumber;
+    }
 
-	public void setOrder(Order order) {
-		this.order = order;
-	}
+    public Courier getCourier() {
+        return courier;
+    }
+
+    public void setCourier(Courier courier) {
+        this.courier = courier;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 
 }

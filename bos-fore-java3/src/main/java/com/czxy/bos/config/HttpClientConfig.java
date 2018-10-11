@@ -33,7 +33,7 @@ public class HttpClientConfig {
 
 
     @Bean
-    public PoolingHttpClientConnectionManager connectionManager (){
+    public PoolingHttpClientConnectionManager connectionManager() {
         PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
         // 1) 最大连接数
         cm.setMaxTotal(maxTotal);
@@ -44,6 +44,7 @@ public class HttpClientConfig {
 
     /**
      * 注册RequestConfig
+     *
      * @return
      */
     @Bean
@@ -57,6 +58,7 @@ public class HttpClientConfig {
 
     /**
      * 注册HttpClient
+     *
      * @param manager
      * @param config
      * @return
@@ -70,9 +72,9 @@ public class HttpClientConfig {
     }
 
 
-
     /**
      * 配置连接工厂
+     *
      * @param httpClient
      * @return
      */
@@ -83,6 +85,7 @@ public class HttpClientConfig {
 
     /**
      * 使用HttpClient来初始化一个RestTemplate
+     *
      * @param requestFactory
      * @return
      */

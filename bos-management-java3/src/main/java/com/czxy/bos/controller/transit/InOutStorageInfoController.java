@@ -18,7 +18,7 @@ public class InOutStorageInfoController {
     private InOutStorageInfoService inOutStorageInfoService;
 
     @PostMapping()
-    public ResponseEntity<Void> save(InOutStorageInfo inOutStorageInfo){
+    public ResponseEntity<Void> save(InOutStorageInfo inOutStorageInfo) {
 
         inOutStorageInfoService.save(inOutStorageInfo);
         return new ResponseEntity<>(HttpStatus.OK);

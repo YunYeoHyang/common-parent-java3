@@ -32,6 +32,7 @@ public class BosRealm extends AuthorizingRealm {
 
     /**
      * 授权
+     *
      * @param pc
      * @return
      */
@@ -47,14 +48,14 @@ public class BosRealm extends AuthorizingRealm {
         // 调用业务层，查询角色
         List<Role> roles = roleService.findByUser(user);
 
-        for ( Role role : roles){
-            authorizationInfo.addRole( role.getKeyword() );
+        for (Role role : roles) {
+            authorizationInfo.addRole(role.getKeyword());
         }
 
         // 调用业务层，查询权限
         List<Permission> permissions = permissionService.findByUser(user);
-        for (Permission permission : permissions ){
-            authorizationInfo.addStringPermission( permission.getKeyword() );
+        for (Permission permission : permissions) {
+            authorizationInfo.addStringPermission(permission.getKeyword());
         }
 
         return authorizationInfo;
@@ -62,6 +63,7 @@ public class BosRealm extends AuthorizingRealm {
 
     /**
      * 认证
+     *
      * @param token
      * @return
      * @throws AuthenticationException
@@ -75,10 +77,10 @@ public class BosRealm extends AuthorizingRealm {
 
         // 2. 通过 userName 从数据库中查找 User 对象，如果找到，没找到
         User user = userService.findUserByUsername(userName);
-        if (user == null){
+        if (user == null) {
 
             return null;
         }
-        return new SimpleAuthenticationInfo( user , user.getPassword() , getName() );
+        return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
     }
 }

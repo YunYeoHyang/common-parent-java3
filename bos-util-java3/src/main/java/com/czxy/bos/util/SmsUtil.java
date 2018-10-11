@@ -13,6 +13,7 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+
 /**
  * Created on 17/6/7.
  * 短信API产品的DEMO程序,工程中包含了一个SmsDemo类，直接通过
@@ -20,7 +21,7 @@ import com.aliyuncs.profile.IClientProfile;
  * 工程依赖了2个jar包(存放在工程的libs目录下)
  * 1:aliyun-java-sdk-core.jar
  * 2:aliyun-java-sdk-dysmsapi.jar
- *
+ * <p>
  * 备注:Demo工程编码采用UTF-8
  * 国际短信发送请勿参照此DEMO
  */
@@ -37,7 +38,7 @@ public class SmsUtil {
     static final String accessKeyId = "LTAIlefATxsjTNoL";//
     static final String accessKeySecret = "zhzDVzH1KjqeZZVOHsTsqfjApi0HJJ";
 
-    public static SendSmsResponse sendSms(String telephone,String name, String code ,String address , String phone) throws ClientException {
+    public static SendSmsResponse sendSms(String telephone, String name, String code, String address, String phone) throws ClientException {
 
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
@@ -51,14 +52,14 @@ public class SmsUtil {
         //组装请求对象-具体描述见控制台-文档部分内容
         SendSmsRequest request = new SendSmsRequest();
         //必填:待发送手机号
-        request.setPhoneNumbers(telephone); 		//15000000000
+        request.setPhoneNumbers(telephone);        //15000000000
         //必填:短信签名-可在短信控制台中找到
-        request.setSignName("桐叔老司机");			//老袁a洗脚6
+        request.setSignName("桐叔老司机");            //老袁a洗脚6
         //必填:短信模板-可在短信控制台中找到
-        request.setTemplateCode("SMS_130929218"); 	//SMS_85550034
+        request.setTemplateCode("SMS_130929218");    //SMS_85550034
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
         //${name}您好，请凭取件码：${code}，至${address}取件，若有问题请咨询${phone}。
-        request.setTemplateParam("{\"name\":\""+name+"\",\"code\":\""+code+"\",\"address\":\""+address+"\",\"phone\":\""+phone+"\"}");
+        request.setTemplateParam("{\"name\":\"" + name + "\",\"code\":\"" + code + "\",\"address\":\"" + address + "\",\"phone\":\"" + phone + "\"}");
 
         //选填-上行短信扩展码(无特殊需求用户请忽略此字段)
         //request.setSmsUpExtendCode("90997");
@@ -104,15 +105,15 @@ public class SmsUtil {
         return querySendDetailsResponse;
     }
 
-    
+
     public static void main(String[] args) throws ClientException, InterruptedException {
-    	/**生成验证码*/
-    	//String snumber = RandomStringUtils.random(4); // 有bug
-    	String number = getNumber();
-    	/**发送的电话号*/
-    	String telephone = "13699282444";
+        /**生成验证码*/
+        //String snumber = RandomStringUtils.random(4); // 有bug
+        String number = getNumber();
+        /**发送的电话号*/
+        String telephone = "13699282444";
         //发短信
-        SendSmsResponse response = sendSms(telephone,"张先生", number , "上海花园" ,"110");
+        SendSmsResponse response = sendSms(telephone, "张先生", number, "上海花园", "110");
         System.out.println("短信接口返回的数据----------------");
         System.out.println("Code=" + response.getCode());
         System.out.println("Message=" + response.getMessage());
@@ -122,15 +123,14 @@ public class SmsUtil {
         Thread.sleep(3000L);
 
         //查明细
-        if(response.getCode() != null && response.getCode().equals("OK")) {
+        if (response.getCode() != null && response.getCode().equals("OK")) {
             QuerySendDetailsResponse querySendDetailsResponse = querySendDetails(response.getBizId());
             System.out.println("短信明细查询接口返回数据----------------");
             System.out.println("Code=" + querySendDetailsResponse.getCode());
             System.out.println("Message=" + querySendDetailsResponse.getMessage());
             int i = 0;
-            for(QuerySendDetailsResponse.SmsSendDetailDTO smsSendDetailDTO : querySendDetailsResponse.getSmsSendDetailDTOs())
-            {
-                System.out.println("SmsSendDetailDTO["+i+"]:");
+            for (QuerySendDetailsResponse.SmsSendDetailDTO smsSendDetailDTO : querySendDetailsResponse.getSmsSendDetailDTOs()) {
+                System.out.println("SmsSendDetailDTO[" + i + "]:");
                 System.out.println("Content=" + smsSendDetailDTO.getContent());
                 System.out.println("ErrCode=" + smsSendDetailDTO.getErrCode());
                 System.out.println("OutId=" + smsSendDetailDTO.getOutId());
@@ -145,12 +145,15 @@ public class SmsUtil {
         }
 
     }
-    /** 随机生成4位验证码*/
-    public static String getNumber(){
-    	int number;//定义两变量
+
+    /**
+     * 随机生成4位验证码
+     */
+    public static String getNumber() {
+        int number;//定义两变量
         Random ne = new Random();//实例化一个random的对象ne
-        number = ne.nextInt(9999-1000+1)+1000;//为变量赋随机值1000-9999
-        System.out.println("产生的随机数是:"+number);//输出
+        number = ne.nextInt(9999 - 1000 + 1) + 1000;//为变量赋随机值1000-9999
+        System.out.println("产生的随机数是:" + number);//输出
         return String.valueOf(number);
     }
 }

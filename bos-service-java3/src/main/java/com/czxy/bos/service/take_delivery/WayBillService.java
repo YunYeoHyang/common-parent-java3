@@ -1,6 +1,7 @@
 package com.czxy.bos.service.take_delivery;
 
 import com.czxy.bos.dao.take_delivery.WayBillMapper;
+import com.czxy.bos.domain.report.HighChart;
 import com.czxy.bos.domain.take_delivery.WayBill;
 import com.czxy.bos.es.domain.EsWayBill;
 import com.czxy.bos.es.repository.WayBillRepository;
@@ -131,5 +132,13 @@ public class WayBillService {
         WayBill wayBill = wayBillMapper.selectOneByExample(example);
 
         return wayBill;
+    }
+
+    public List<WayBill> findAll() {
+        return this.wayBillMapper.selectAll();
+    }
+
+    public List<HighChart> chartWayBill() {
+        return wayBillMapper.findBySignStatus();
     }
 }
